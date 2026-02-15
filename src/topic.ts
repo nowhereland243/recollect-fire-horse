@@ -26,7 +26,11 @@ function renderTopic() {
   const readTime = document.getElementById('topic-read-time');
   const tagsContainer = document.getElementById('topic-tags');
 
-  if (numeral) numeral.textContent = topic.numeral;
+  if (numeral) {
+    numeral.textContent = topic.numeralEN;
+    numeral.setAttribute('data-en', topic.numeralEN);
+    numeral.setAttribute('data-cn', topic.numeral);
+  }
   if (titleCN) titleCN.textContent = topic.titleCN;
   if (titleEN) titleEN.textContent = topic.titleEN;
   if (subtitle) {
@@ -81,7 +85,7 @@ function renderTopic() {
   if (id > 1) {
     const prev = topics[id - 2];
     if (prevLink) prevLink.href = `/topic.html?t=${prev.id}`;
-    if (prevTitle) prevTitle.textContent = `${prev.numeral} ${prev.titleCN} · ${prev.titleEN}`;
+    if (prevTitle) prevTitle.textContent = `${prev.numeralEN} · ${prev.titleCN} · ${prev.titleEN}`;
   } else {
     if (prevLink) prevLink.style.visibility = 'hidden';
   }
@@ -89,7 +93,7 @@ function renderTopic() {
   if (id < 10) {
     const next = topics[id];
     if (nextLink) nextLink.href = `/topic.html?t=${next.id}`;
-    if (nextTitle) nextTitle.textContent = `${next.numeral} ${next.titleCN} · ${next.titleEN}`;
+    if (nextTitle) nextTitle.textContent = `${next.numeralEN} · ${next.titleCN} · ${next.titleEN}`;
   } else {
     if (nextLink) nextLink.style.visibility = 'hidden';
   }

@@ -17,6 +17,7 @@ export interface GlossaryEntry {
 export interface Topic {
   id: number;
   numeral: string;         // Chinese numeral 壹–拾
+  numeralEN: string;       // Roman numeral I–X
   titleCN: string;
   titleEN: string;
   subtitleEN: string;
@@ -34,6 +35,7 @@ export const topics: Topic[] = [
   {
     id: 1,
     numeral: '壹',
+    numeralEN: 'I',
     titleCN: '肇始',
     titleEN: 'Origins',
     subtitleEN: 'Where the Year Begins',
@@ -60,6 +62,7 @@ export const topics: Topic[] = [
   {
     id: 2,
     numeral: '贰',
+    numeralEN: 'II',
     titleCN: '沿革',
     titleEN: 'Evolution',
     subtitleEN: 'How a Festival Survived Its Own History',
@@ -86,6 +89,7 @@ export const topics: Topic[] = [
   {
     id: 3,
     numeral: '叁',
+    numeralEN: 'III',
     titleCN: '港台',
     titleEN: 'HK & Taiwan',
     subtitleEN: 'Shared Roots, Local Lives',
@@ -111,6 +115,7 @@ export const topics: Topic[] = [
   {
     id: 4,
     numeral: '肆',
+    numeralEN: 'IV',
     titleCN: '海外',
     titleEN: 'Overseas',
     subtitleEN: 'One Moon, Many New Years',
@@ -136,6 +141,7 @@ export const topics: Topic[] = [
   {
     id: 5,
     numeral: '伍',
+    numeralEN: 'V',
     titleCN: '生肖',
     titleEN: 'Zodiac',
     subtitleEN: 'The Mechanics of Destiny',
@@ -161,6 +167,7 @@ export const topics: Topic[] = [
   {
     id: 6,
     numeral: '陆',
+    numeralEN: 'VI',
     titleCN: '俗礼',
     titleEN: 'Customs',
     subtitleEN: 'The Architecture of Ritual',
@@ -186,6 +193,7 @@ export const topics: Topic[] = [
   {
     id: 7,
     numeral: '柒',
+    numeralEN: 'VII',
     titleCN: '年货',
     titleEN: 'Goods',
     subtitleEN: 'The Material Language of the New Year',
@@ -211,6 +219,7 @@ export const topics: Topic[] = [
   {
     id: 8,
     numeral: '捌',
+    numeralEN: 'VIII',
     titleCN: '归途',
     titleEN: 'Homebound',
     subtitleEN: 'The Ethics of Return',
@@ -236,6 +245,7 @@ export const topics: Topic[] = [
   {
     id: 9,
     numeral: '玖',
+    numeralEN: 'IX',
     titleCN: '货殖',
     titleEN: 'Commerce',
     subtitleEN: 'The Abacus of Homecoming',
@@ -261,6 +271,7 @@ export const topics: Topic[] = [
   {
     id: 10,
     numeral: '拾',
+    numeralEN: 'X',
     titleCN: '今古',
     titleEN: 'Meaning',
     subtitleEN: 'The Dialectics of Beginning',

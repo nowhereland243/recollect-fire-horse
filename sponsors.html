@@ -6,10 +6,105 @@
   <title>Sponsors — RECOLLECT</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/tokens.css" />
   <link rel="stylesheet" href="/css/global.css" />
-  <link rel="stylesheet" href="/css/landing.css" />
+  <style>
+    .sponsors-page {
+      padding: calc(var(--nav-h) + var(--sp-10)) var(--sp-4) var(--sp-10);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sponsors-page__inner {
+      text-align: center;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .sponsors-page__title-cn {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      color: var(--clr-gold);
+      margin-bottom: var(--sp-2);
+    }
+
+    .sponsors-page__title-en {
+      font-family: var(--font-serif-en);
+      font-size: var(--fs-lg);
+      font-style: italic;
+      color: var(--clr-ivory);
+      margin-bottom: var(--sp-6);
+    }
+
+    .sponsors-page__desc {
+      font-family: var(--font-sans);
+      font-size: var(--fs-base);
+      font-weight: 300;
+      color: var(--clr-muted);
+      line-height: 1.8;
+      margin: 0 auto var(--sp-8);
+      max-width: 360px;
+    }
+
+    .sponsors-page__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-7) var(--sp-5);
+      margin-bottom: var(--sp-8);
+    }
+
+    .sponsors-page__item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-3);
+      opacity: 0.65;
+      transition: opacity 0.3s ease;
+    }
+
+    .sponsors-page__item:hover {
+      opacity: 1;
+    }
+
+    .sponsors-page__logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      filter: brightness(0.9);
+    }
+
+    /* Center last row if fewer than 3 items */
+    .sponsors-page__grid-last-row {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      gap: var(--sp-5);
+    }
+
+    .sponsors-page__grid-last-row .sponsors-page__item {
+      flex: 0 0 calc(33.333% - var(--sp-5));
+    }
+
+    @media (min-width: 768px) {
+      .sponsors-page__inner {
+        max-width: 560px;
+      }
+
+      .sponsors-page__logo {
+        height: 50px;
+      }
+
+      .sponsors-page__grid {
+        gap: var(--sp-8) var(--sp-6);
+      }
+    }
+  </style>
 </head>
 <body>
   <nav class="nav nav--scrolled" id="nav">
@@ -23,41 +118,39 @@
     </div>
   </nav>
 
-  <main style="padding: calc(var(--nav-h) + var(--sp-10)) var(--sp-4) var(--sp-10); min-height: 80vh;">
-    <div class="container" style="text-align: center;">
-      <p style="font-family: var(--font-serif); font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700; color: var(--clr-gold); margin-bottom: var(--sp-3);">赞助</p>
-      <p style="font-family: var(--font-serif-en); font-size: var(--fs-lg); font-style: italic; color: var(--clr-ivory); margin-bottom: var(--sp-8);">Our Sponsors</p>
+  <main class="sponsors-page">
+    <div class="sponsors-page__inner">
+      <p class="sponsors-page__title-cn">赞助</p>
+      <p class="sponsors-page__title-en">Our Sponsors</p>
 
-      <p style="font-family: var(--font-sans); font-size: var(--fs-base); font-weight: 300; color: var(--clr-muted); line-height: 1.8; max-width: 480px; margin: 0 auto var(--sp-8);">
+      <p class="sponsors-page__desc">
         RECOLLECT is made possible by the generous support of our partners.
       </p>
 
-      <div class="footer__logos" style="gap: var(--sp-7); margin-bottom: var(--sp-8);">
-        <a href="https://www.25hours-hotels.com" target="_blank" rel="noopener" class="footer__logo-link" style="opacity: 0.75;">
-          <img src="/assets/sponsors/25hours.png" alt="25hours Hotels" style="height: 48px; width: auto; object-fit: contain;" />
+      <div class="sponsors-page__grid">
+        <a href="https://www.remymartin.com" target="_blank" rel="noopener" class="sponsors-page__item">
+          <img src="/assets/sponsors/remymartin.png" alt="Rémy Martin" class="sponsors-page__logo" />
         </a>
-        <a href="https://www.westelm.com" target="_blank" rel="noopener" class="footer__logo-link" style="opacity: 0.75;">
-          <img src="/assets/sponsors/westelm.png" alt="West Elm" style="height: 48px; width: auto; object-fit: contain;" />
+        <a href="https://www.westelm.com" target="_blank" rel="noopener" class="sponsors-page__item">
+          <img src="/assets/sponsors/westelm.png" alt="West Elm" class="sponsors-page__logo" />
         </a>
-        <a href="https://www.remymartin.com" target="_blank" rel="noopener" class="footer__logo-link" style="opacity: 0.75;">
-          <img src="/assets/sponsors/remymartin.png" alt="Rémy Martin" style="height: 56px; width: auto; object-fit: contain;" />
+        <a href="https://maisondetto.com" target="_blank" rel="noopener" class="sponsors-page__item">
+          <img src="/assets/sponsors/maisondetto.png" alt="Maison d'Etto" class="sponsors-page__logo" />
         </a>
-        <a href="https://maisondetto.com" target="_blank" rel="noopener" class="footer__logo-link" style="opacity: 0.75;">
-          <img src="/assets/sponsors/maisondetto.png" alt="Maison d'Etto" style="height: 36px; width: auto; object-fit: contain;" />
+      </div>
+      <div class="sponsors-page__grid-last-row">
+        <a href="https://www.25hours-hotels.com" target="_blank" rel="noopener" class="sponsors-page__item">
+          <img src="/assets/sponsors/25hours.png" alt="25hours Hotels" class="sponsors-page__logo" />
         </a>
-        <a href="https://hudsonwilder.com" target="_blank" rel="noopener" class="footer__logo-link" style="opacity: 0.75;">
-          <img src="/assets/sponsors/hudsonwilder.png" alt="Hudson Wilder" style="height: 36px; width: auto; object-fit: contain;" />
+        <a href="https://hudsonwilder.com" target="_blank" rel="noopener" class="sponsors-page__item">
+          <img src="/assets/sponsors/hudsonwilder.png" alt="Hudson Wilder" class="sponsors-page__logo" />
         </a>
       </div>
     </div>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <p class="footer__copy">© 2026 RECOLLECT. All rights reserved.</p>
-      </div>
-    </div>
+  <footer class="footer" style="padding: var(--sp-5) var(--sp-4); border-top: 1px solid rgba(245,240,232,0.04); text-align: center;">
+    <p style="font-family: var(--font-sans); font-size: 11px; font-weight: 300; letter-spacing: 0.1em; color: var(--clr-muted);">© 2026 RECOLLECT. All rights reserved.</p>
   </footer>
 </body>
 </html>

@@ -331,11 +331,11 @@
 }
 
 .footer__logos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--sp-5);
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .footer__logo-link {
@@ -344,6 +344,7 @@
   justify-content: center;
   opacity: 0.55;
   transition: opacity 0.3s ease;
+  padding: var(--sp-2);
 }
 
 .footer__logo-link:hover {
@@ -353,7 +354,7 @@
 .footer__logo {
   height: 28px;
   width: auto;
-  max-width: 100px;
+  max-width: 90px;
   object-fit: contain;
   filter: brightness(0.9);
 }
@@ -374,9 +375,14 @@
 
 /* ─── Responsive ─── */
 @media (min-width: 768px) {
+  .footer__logos {
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 600px;
+  }
+
   .footer__logo {
     height: 34px;
-    max-width: 120px;
+    max-width: 110px;
   }
   
   .topic-card {

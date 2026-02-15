@@ -14,7 +14,7 @@ function renderTopicCards() {
   grid.innerHTML = topics.map(t => `
     <a href="/topic.html?t=${t.id}" class="topic-card" data-topic="${t.id}">
       <div class="topic-card__header">
-        <span class="topic-card__numeral">${t.numeral}</span>
+        <span class="topic-card__numeral" data-en="${t.numeralEN}" data-cn="${t.numeral}">${t.numeralEN}</span>
         <div class="topic-card__titles">
           <span class="topic-card__title-cn">${t.titleCN}</span>
           <span class="topic-card__title-en">${t.titleEN}</span>
