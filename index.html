@@ -26,13 +26,22 @@
         <a href="/menu.html" class="nav__link">菜单 Menu</a>
         <a href="/sponsors.html" class="nav__link">赞助 Sponsors</a>
       </div>
-      <button class="nav__lang" id="lang-toggle" aria-label="Toggle language">EN / 中</button>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <button class="nav__lang" id="audio-toggle" aria-label="Toggle audio">
+          SOUND OFF
+        </button>
+        <button class="nav__lang" id="lang-toggle" aria-label="Toggle language">EN / 中</button>
+      </div>
     </div>
   </nav>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="hero">
     <div class="hero__bg">
+      <video class="hero__video" playsinline muted loop autoplay poster="/assets/hero.png">
+        <source src="/assets/hero-mobile.mov" type="video/quicktime" />
+        <source src="/assets/hero-mobile.mp4" type="video/mp4" />
+      </video>
       <img src="/assets/hero.png" alt="Fire Horse" class="hero__img" />
       <canvas id="particles" class="hero__particles"></canvas>
     </div>

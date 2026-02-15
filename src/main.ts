@@ -5,6 +5,7 @@
 import { topics } from './data';
 import { initParticles } from './particles';
 import { initI18n } from './i18n';
+import { initAudio } from './audio';
 
 // ─── Build Topic Cards ───
 function renderTopicCards() {
@@ -98,4 +99,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initParticles();
   initI18n();
+  initAudio();
 });

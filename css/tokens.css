@@ -55,35 +55,41 @@
 
 :root {
   /* ── Colors (Ink & Ember Palette) ── */
-  --clr-ink:          #0A0A0A;
-  --clr-hero-deep:    #050505;
-  --clr-surface:      #111111;
+  --clr-ink:          #080808;  /* Slightly deeper black */
+  --clr-hero-deep:    #030303;
+  --clr-surface:      #0F0F0F;
   --clr-ivory:        #F5F0E8;
-  --clr-muted:        rgba(245, 240, 232, 0.45);
-  --clr-gold:         #C9A84C;
+  --clr-muted:        rgba(245, 240, 232, 0.55);
+  
+  /* Metallic Gold Gradients */
+  --gold-start:       #DFBD69;
+  --gold-end:         #926F34;
+  --gold-gradient:    linear-gradient(135deg, #DFBD69 0%, #926F34 100%);
+  --gold-text-shine:  linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  
   --clr-fire-start:   #D4380D;
   --clr-fire-end:     #FF6B35;
 
   /* Legacy aliases */
   --ink:        var(--clr-ink);
   --ink-light:  var(--clr-surface);
-  --ink-card:   rgba(255, 255, 255, 0.04);
+  --ink-card:   rgba(255, 255, 255, 0.03);
   --ink-border: rgba(255, 255, 255, 0.08);
   --ivory:      var(--clr-ivory);
-  --ivory-dim:  rgba(245, 240, 232, 0.6);
+  --ivory-dim:  rgba(245, 240, 232, 0.7);
   --ivory-mute: var(--clr-muted);
   --fire:       var(--clr-fire-start);
   --ember:      var(--clr-fire-end);
-  --gold:       var(--clr-gold);
-  --gold-dim:   rgba(201, 168, 76, 0.5);
+  --gold:       #C9A84C; /* Fallback flat gold */
 
   /* Gradients */
   --fire-gradient: linear-gradient(135deg, var(--clr-fire-start), var(--clr-fire-end));
-  --fire-glow:     0 0 30px rgba(212, 56, 13, 0.25);
-  --gold-glow:     0 0 20px rgba(201, 168, 76, 0.2);
+  --fire-glow:     0 0 40px rgba(212, 56, 13, 0.2);
+  --gold-glow:     0 0 25px rgba(223, 189, 105, 0.15);
 
   /* ── Typography ── */
-  --font-serif:    'Noto Serif SC', 'Georgia', serif;
+  /* Source Han Serif CN is "Siyuan Songti" in Chinese systems */
+  --font-serif:    'Source Han Serif CN', 'Source Han Serif SC', 'Noto Serif SC', 'Songti SC', serif;
   --font-serif-en: 'Cormorant Infant', 'Georgia', serif;
   --font-sans:     'Neue Haas Grotesk', 'Inter', 'system-ui', -apple-system, sans-serif;
 
@@ -107,14 +113,20 @@
   --sp-10: 5rem;
 
   /* ── Layout ── */
-  --max-content:  640px;
-  --nav-h:        56px;
+  --max-content:  680px; /* Slightly wider for editorial feel */
+  --nav-h:        64px;
 
   /* ── Motion ── */
   --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
 
-  /* ── Borders ── */
+  /* ── Borders & Glass ── */
   --radius-sm: 4px;
   --radius-md: 8px;
+  --radius-pill: 999px;
+  
+  --glass-bg:     rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur:   blur(12px);
+  --glass-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
 }
