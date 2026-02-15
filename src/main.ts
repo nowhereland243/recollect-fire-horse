@@ -41,26 +41,43 @@ function initScrollAnimations() {
 
   document.querySelectorAll('.topic-card').forEach(card => observer.observe(card));
   
-  // Hero Organic Arc Entrance (GSAP)
+  // Hero Ritual Sequence Entrance (GSAP)
   const heroContent = document.querySelector('.hero__content');
   if (heroContent) {
-      const elements = heroContent.children;
-      gsap.fromTo(elements, 
-        { 
-            y: 100, 
-            opacity: 0, 
-            rotation: 2 
-        },
-        { 
-            duration: 1.5, 
-            y: 0, 
-            opacity: 1, 
-            rotation: 0, 
-            stagger: 0.2, 
-            ease: "power3.out",
-            clearProps: "all"
+      // Animate the pre-title and subtitle/date normally
+      const preTitle = heroContent.querySelector('.hero__pre');
+      const subTitle = heroContent.querySelector('.hero__title-sub');
+      const dateEl = heroContent.querySelector('.hero__date');
+      const scrollEl = heroContent.querySelector('.hero__scroll');
+      
+      if (preTitle) {
+        gsap.fromTo(preTitle, { y: 30, opacity: 0 }, { duration: 1.2, y: 0, opacity: 1, ease: "power3.out", delay: 0.2 });
+      }
+      
+      // Ritual words — stagger cascade with wave feel
+      const steps = heroContent.querySelectorAll('.hero__step');
+      steps.forEach((step, i) => {
+        const isHighlight = step.classList.contains('hero__step--highlight');
+        gsap.fromTo(step,
+          { y: 60 + i * 10, opacity: 0, scale: isHighlight ? 0.9 : 0.95 },
+          {
+            duration: isHighlight ? 1.8 : 1.2,
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            ease: isHighlight ? "elastic.out(1, 0.75)" : "power3.out",
+            delay: 0.5 + i * 0.25,
+            clearProps: "transform"
+          }
+        );
+      });
+      
+      // Sub-elements fade in after
+      [subTitle, dateEl, scrollEl].forEach((el, i) => {
+        if (el) {
+          gsap.fromTo(el, { y: 20, opacity: 0 }, { duration: 1, y: 0, opacity: 1, ease: "power3.out", delay: 1.8 + i * 0.2, clearProps: "all" });
         }
-      );
+      });
   }
 }
 
