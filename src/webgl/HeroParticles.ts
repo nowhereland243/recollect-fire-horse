@@ -124,7 +124,7 @@ export class HeroParticles extends ParticleSystem {
 
     init() {
         const img = new Image();
-        img.src = '/hero_horse.jpg';
+        img.src = '/hero_horse.png'; // Use the new PNG
         img.crossOrigin = 'Anonymous';
         img.onload = () => this.processImage(img);
     }

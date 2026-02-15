@@ -1,3 +1,46 @@
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* Deep Crimson Gradient Base */
+  background: radial-gradient(circle at top center, #800000 0%, #4a0404 40%, #1a0000 100%);
+  background-attachment: fixed; /* Keep it fixed */
+  color: #fff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Gold Gradient Text Utility ─── */
+.text-gold-3d {
+  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* Fallback */
+  text-shadow: 0px 2px 4px rgba(0,0,0,0.3); /* Slight shadow for 3D pop */
+}
+
+/* Apply to specific elements */
+.hero__title-main,
+.nav__brand,
+.topic-card__title,
+.sponsors h2, /* If exists */
+.footer__sponsors-label {
+  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700; /* Bold for metal effect */
+}
+
+.hero__title-sub {
+  color: #ffcccc; /* Soft Rose/White for sub */
+  text-shadow: 0 0 10px rgba(255, 100, 100, 0.5);
+}
+
+.hero__date {
+  color: rgba(255, 200, 200, 0.8);
+}
+
 /* ─── Hero ─── */
 .hero {
   position: relative;
@@ -5,8 +48,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Red Gradient Background for Hero only */
-  background: radial-gradient(circle at center, #5a1a0b 0%, #2b0d05 40%, #000000 100%);
+  /* Transparent so Body Red shows through, but we can add a slight overlay */
+  background: transparent;
+}
+
+/* Remove old hero-gradient if purely red desired, or keep for depth */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(100,0,0,0.2) 0%, transparent 70%);
+  z-index: -2;
+  pointer-events: none;
 }
 
 .hero__bg {
