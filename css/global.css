@@ -375,15 +375,16 @@ hr {
   width: 100%;
   display: flex;
   justify-content: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
   padding-top: 2rem;
 }
 
 .footer__copy {
   font-family: var(--font-sans);
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.2);
-  letter-spacing: 0.1em;
+  font-size: 0.55rem;
+  color: rgba(255, 255, 255, 0.12);
+  letter-spacing: 0.12em;
   text-align: center;
-  line-height: 1.8;
+  line-height: 2;
+  font-weight: 300;
 }
