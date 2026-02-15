@@ -110,6 +110,16 @@
 .topic-body {
   padding: var(--sp-8) var(--sp-4);
   background: var(--clr-ink);
+  position: relative;
+  z-index: 1;
+}
+
+body {
+  background-color: var(--clr-ink);
+  background-image: radial-gradient(circle at 50% top, var(--topic-color, transparent), transparent 80%);
+  background-attachment: fixed;
+  background-size: 100% 100vh;
+  background-repeat: no-repeat;
 }
 
 .topic-section {

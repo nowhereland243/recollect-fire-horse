@@ -15,7 +15,7 @@ export interface GlossaryEntry {
 }
 
 export interface Topic {
-  id: number;
+  id: string;
   numeral: string;         // Chinese numeral 壹–拾
   numeralEN: string;       // Roman numeral I–X
   titleCN: string;
@@ -29,11 +29,12 @@ export interface Topic {
   sections: TopicSection[];
   glossary: GlossaryEntry[];
   closingLine: string;
+  themeColor?: string;
 }
 
 export const topics: Topic[] = [
   {
-    id: 1,
+    id: 'origins',
     numeral: '壹',
     numeralEN: 'I',
     titleCN: '肇始',
@@ -58,9 +59,10 @@ export const topics: Topic[] = [
       { term: '天干地支', pinyin: 'Tiāngān Dìzhī', meaning: 'Heavenly Stems and Earthly Branches — the 60-year cycle' },
     ],
     closingLine: 'We are honored to share this exploration with you.',
+    themeColor: '#DFBD69', // Gold
   },
   {
-    id: 2,
+    id: 'evolution',
     numeral: '贰',
     numeralEN: 'II',
     titleCN: '沿革',
@@ -74,7 +76,7 @@ export const topics: Topic[] = [
     sections: [
       { question: 'Why is it called "Spring Festival" instead of "New Year"?', answer: 'In 1914, a bureaucrat proposed a compromise. The new Republic of China had adopted the Western calendar, yet hundreds of millions of people refused to abandon the lunar one. January 1st would take the name Yuandan—"First Dawn"—and the lunar celebration would be relabeled Chunjie—"Spring Festival." The people accepted the new name. They did not accept the new time.' },
       { question: 'Has anyone ever tried to abolish it?', answer: 'Three times. In 1929, the Nationalists declared the lunar calendar abolished — families celebrated behind closed doors. In 1967, at the height of the Cultural Revolution, the State Council canceled the holiday entirely — people ate dumplings in secret, muffling the sound of chopping meat with blankets. The festival survived because it could not be policed out of living memory.' },
-      { question: 'What is the Fire Horse Year?', answer: 'The Chinese calendar cycles through sixty combinations of twelve animals and five elements. Every sixty years, the Fire Horse returns. The last was 1966, when the Cultural Revolution began. Before that, 1906 saw a crumbling Qing dynasty. 2026 will be the next.' },
+      { question: 'What is the Fire Horse Year?', answer: 'The Chinese calendar cycles through sixty combinations of twelve animals and five elements. Every sixty years, the Fire Horse returns. The last was 1966, when the Cultural Revolution began. Before the Cultural Revolution, 1906 saw a crumbling Qing dynasty. 2026 will be the next.' },
       { question: 'When did the festival become a television event?', answer: 'In 1983, China Central Television broadcast its first Spring Festival Gala — a live, synchronized countdown. Before the Gala, celebrations were local and asynchronous. Afterward, an entire nation experienced the same stroke of midnight from Beijing. The television replaced the ancestral altar as the focal point of the living room.' },
       { question: 'What about the name — "Chinese" or "Lunar" New Year?', answer: 'The festival\'s calendar, zodiac, and many core traditions originated in what is now China. Yet variants are indigenous to Korea (Seollal), Vietnam (Tết), and other Asian cultures. We use both terms. We do not claim to resolve the tension. We only note that the question exists, and that it matters.' },
     ],
@@ -85,9 +87,10 @@ export const topics: Topic[] = [
       { term: '春晚', pinyin: 'Chūnwǎn', meaning: 'The CCTV Spring Festival Gala (since 1983)' },
     ],
     closingLine: 'We are honored to share this exploration with you.',
+    themeColor: '#2A9D8F', // Jade
   },
   {
-    id: 3,
+    id: 'hktw',
     numeral: '叁',
     numeralEN: 'III',
     titleCN: '港台',
@@ -111,9 +114,10 @@ export const topics: Topic[] = [
       { term: '本土化', pinyin: 'Běntǔhuà', meaning: 'Indigenization — Taiwan\'s post-martial law cultural reclamation' },
     ],
     closingLine: 'Two strategies of survival — one of containment, one of release.',
+    themeColor: '#E63946', // Crimson
   },
   {
-    id: 4,
+    id: 'overseas',
     numeral: '肆',
     numeralEN: 'IV',
     titleCN: '海外',
@@ -137,9 +141,10 @@ export const topics: Topic[] = [
       { term: '鑲嵌', pinyin: 'Xông đất', meaning: 'Vietnamese First-Footing ritual' },
     ],
     closingLine: 'A single moon can mean many things to many peoples.',
+    themeColor: '#457B9D', // Ocean
   },
   {
-    id: 5,
+    id: 'zodiac',
     numeral: '伍',
     numeralEN: 'V',
     titleCN: '生肖',
@@ -163,18 +168,19 @@ export const topics: Topic[] = [
       { term: '五行', pinyin: 'Wǔxíng', meaning: 'Five Phases — Wood, Fire, Earth, Metal, Water' },
     ],
     closingLine: 'The mechanics of the cosmos shape human time.',
+    themeColor: '#BC4749', // Earth
   },
   {
-    id: 6,
+    id: 'customs',
     numeral: '陆',
     numeralEN: 'VI',
     titleCN: '俗礼',
     titleEN: 'Customs',
-    subtitleEN: 'The Architecture of Ritual',
-    subtitleCN: '仪式的建筑',
-    oneLinerEN: 'We sweep the dust to clear a path for the new.',
-    oneLinerCN: '扫去旧尘，为新铺路。',
-    tags: ['ritual', 'taboo', 'food'],
+    subtitleEN: 'The Warmth of Rules',
+    subtitleCN: '规矩的温情',
+    oneLinerEN: 'Kowtows, red envelopes, taboos. Behind the complexity is a reverence for order.',
+    oneLinerCN: '磕头、红包、禁忌。繁琐背后，是对秩序的敬畏。',
+    tags: ['RITUAL', 'FAMILY', 'ETIQUETTE'],
     readTime: '6 min',
     sections: [
       { question: 'What happens before New Year\'s Day begins?', answer: 'On the 23rd or 24th of the twelfth lunar month, the Kitchen God departs for heaven to report on the family\'s conduct. Families offer malt sugar candies — to bribe the deity into speaking well, or to stick his teeth shut. It is a pragmatic negotiation with the divine bureaucracy.' },
@@ -189,18 +195,19 @@ export const topics: Topic[] = [
       { term: '拱手', pinyin: 'Gǒng Shǒu', meaning: 'Cupped-hand salute — left-over-right for men' },
     ],
     closingLine: 'We wear red to remind the winter that the fire of the horse still burns within the blood.',
+    themeColor: '#F4A261', // Orange
   },
   {
-    id: 7,
+    id: 'goods',
     numeral: '柒',
     numeralEN: 'VII',
     titleCN: '年货',
     titleEN: 'Goods',
-    subtitleEN: 'The Material Language of the New Year',
-    subtitleCN: '新年的物质语言',
-    oneLinerEN: 'Every fruit is a sentence. Every gift is a contract.',
-    oneLinerCN: '每一颗水果都是一句话。每一件礼物都是一份契约。',
-    tags: ['commerce', 'food', 'semiotics'],
+    subtitleEN: 'The Inventory of Desire',
+    subtitleCN: '欲望的清单',
+    oneLinerEN: 'From narcissus flowers to electronics, what are we buying?',
+    oneLinerCN: '从水仙花到电子产品，我们在买什么？',
+    tags: ['CONSUMERISM', 'TRADITION', 'GIFTING'],
     readTime: '7 min',
     sections: [
       { question: 'What are "Nianhuo" and why do they matter?', answer: 'Nianhuo — New Year goods — are not ordinary groceries. Each item is selected for its symbolic resonance, its ability to speak the language of blessing. In the Chinese moral economy, a gift received creates a debt of reciprocity that must be repaid. Consumption becomes communication.' },
@@ -217,7 +224,7 @@ export const topics: Topic[] = [
     closingLine: 'The New Year market is not merely moving goods — it is moving hearts.',
   },
   {
-    id: 8,
+    id: 'homebound',
     numeral: '捌',
     numeralEN: 'VIII',
     titleCN: '归途',
@@ -243,7 +250,7 @@ export const topics: Topic[] = [
     closingLine: 'Nine billion journeys answer a single question: Who waits for me at home?',
   },
   {
-    id: 9,
+    id: 'commerce',
     numeral: '玖',
     numeralEN: 'IX',
     titleCN: '货殖',
@@ -269,7 +276,7 @@ export const topics: Topic[] = [
     closingLine: 'When the festival ends, the ledger is clear — not of debt, but of distance.',
   },
   {
-    id: 10,
+    id: 'vision',
     numeral: '拾',
     numeralEN: 'X',
     titleCN: '今古',

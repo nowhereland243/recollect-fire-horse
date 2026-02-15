@@ -200,20 +200,18 @@
 /* ─── Topic Card ─── */
 .topic-card {
   position: relative;
-  display: block;
-  padding: var(--sp-6) var(--sp-5);
-  background: linear-gradient(180deg, rgba(20,20,20,0.6) 0%, rgba(10,10,10,0.4) 100%);
-  border: 1px solid var(--ink-border);
-  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, rgba(8,8,8,0.95), rgba(15,15,15,0.95)); /* Deeper black */
+  border: 1px solid rgba(255, 245, 230, 0.08);
+  border-radius: 24px; /* Apple-style */
+  padding: 32px;
   text-decoration: none;
-  color: inherit;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* Apple easing */
+  backdrop-filter: blur(10px);
   overflow: hidden;
   opacity: 0;
   transform: translateY(24px);
-  transition: transform 0.5s var(--ease-out),
-              border-color 0.4s ease,
-              box-shadow 0.4s ease,
-              background 0.4s ease;
 }
 
 .topic-card.visible {

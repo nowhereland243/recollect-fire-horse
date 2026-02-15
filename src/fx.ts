@@ -1,3 +1,5 @@
+import { topics } from './data';
+
 export class VisualFX {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
@@ -7,6 +9,7 @@ export class VisualFX {
     mouseX: number = 0;
     mouseY: number = 0;
     hoveredCard: HTMLElement | null = null;
+    hoverColor: string = '#DFBD69';
     
     constructor() {
         this.canvas = document.createElement('canvas');
@@ -27,7 +30,8 @@ export class VisualFX {
         window.addEventListener('resize', () => this.resize());
         window.addEventListener('mousemove', (e) => this.onMouseMove(e));
         
-        this.initCardListeners();
+        // Defer listener attachment to ensure DOM is ready
+        setTimeout(() => this.initCardListeners(), 100);
         this.loop();
     }
 
@@ -39,13 +43,35 @@ export class VisualFX {
     }
 
     initCardListeners() {
-        // Find all topic cards and attach hover listeners
-        // We use event delegation or find them all
         const cards = document.querySelectorAll('.topic-card');
         cards.forEach(card => {
-            card.addEventListener('mouseenter', () => this.hoveredCard = card as HTMLElement);
+            card.addEventListener('mouseenter', () => {
+                this.hoveredCard = card as HTMLElement;
+                const topicId = (card as HTMLElement).dataset.topic;
+                // Find topic color
+                const topic = topics.find(t => t.id === topicId); // ID is string now
+                this.hoverColor = topic?.themeColor || '#DFBD69';
+                
+                // EXPLOSION: Add burst of particles
+                this.explode(card as HTMLElement, this.hoverColor);
+            });
             card.addEventListener('mouseleave', () => this.hoveredCard = null);
         });
+    }
+
+    explode(element: HTMLElement, color: string) {
+        const rect = element.getBoundingClientRect();
+        // Burst from all sides
+        for (let i = 0; i < 30; i++) {
+            const side = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
+            let x, y;
+            if (side === 0) { x = rect.left + Math.random() * rect.width; y = rect.top; }
+            else if (side === 1) { x = rect.right; y = rect.top + Math.random() * rect.height; }
+            else if (side === 2) { x = rect.left + Math.random() * rect.width; y = rect.bottom; }
+            else { x = rect.left; y = rect.top + Math.random() * rect.height; }
+            
+            this.particles.push(new Particle(x, y, 'burst', color));
+        }
     }
 
     onMouseMove(e: MouseEvent) {
@@ -54,28 +80,26 @@ export class VisualFX {
         
         // Liquid Cursor Trail
         for(let i=0; i<2; i++) {
-            this.particles.push(new Particle(this.mouseX, this.mouseY, 'cursor'));
+            this.particles.push(new Particle(this.mouseX, this.mouseY, 'cursor', '#DFBD69'));
         }
     }
 
     loop() {
         this.ctx.clearRect(0, 0, this.width, this.height);
         
-        // Topic Card Embers
+        // Topic Card Hover Embers (Continuous)
         if (this.hoveredCard) {
             const rect = this.hoveredCard.getBoundingClientRect();
-            // Emit from bottom edge
-            // Random x between left and right
+            // Emit from bottom
             const x = rect.left + Math.random() * rect.width;
             const y = rect.bottom; 
             
-            // Add ember particles
-            if (Math.random() > 0.5) { // Control density
-                this.particles.push(new Particle(x, y, 'ember'));
+            if (Math.random() > 0.5) {
+                this.particles.push(new Particle(x, y, 'ember', this.hoverColor));
             }
         }
 
-        // Update and draw all particles
+        // Update and draw
         for (let i = 0; i < this.particles.length; i++) {
             const p = this.particles[i];
             p.update();
@@ -100,12 +124,13 @@ class Particle {
     maxLife: number;
     size: number;
     color: string;
-    type: 'cursor' | 'ember';
+    type: 'cursor' | 'ember' | 'burst';
 
-    constructor(x: number, y: number, type: 'cursor' | 'ember') {
+    constructor(x: number, y: number, type: 'cursor' | 'ember' | 'burst', colorBase: string) {
         this.x = x;
         this.y = y;
         this.type = type;
+        this.color = colorBase;
         
         if (type === 'cursor') {
             const angle = Math.random() * Math.PI * 2;
@@ -114,18 +139,22 @@ class Particle {
             this.vy = Math.sin(angle) * speed;
             this.maxLife = 40 + Math.random() * 40;
             this.size = 2 + Math.random() * 4;
-            // Cursor Gold Palette
             const colors = ['#DFBD69', '#926F34', '#FBF5B7'];
             this.color = colors[Math.floor(Math.random() * colors.length)];
+        } else if (type === 'burst') {
+            // Explosive
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 1 + Math.random() * 3;
+            this.vx = Math.cos(angle) * speed;
+            this.vy = Math.sin(angle) * speed;
+            this.maxLife = 30 + Math.random() * 20;
+            this.size = 2 + Math.random() * 3;
         } else {
-            // Ember: floated upwards
-            this.vx = (Math.random() - 0.5) * 1; // drift left/right
-            this.vy = -1 - Math.random() * 1.5; // Upwards
+            // Ember
+            this.vx = (Math.random() - 0.5) * 1; 
+            this.vy = -1 - Math.random() * 1.5;
             this.maxLife = 60 + Math.random() * 40;
             this.size = 1 + Math.random() * 2;
-            // Fire/Gold Palette
-            const colors = ['#D4380D', '#FF6B35', '#DFBD69'];
-            this.color = colors[Math.floor(Math.random() * colors.length)];
         }
         
         this.life = this.maxLife;
@@ -135,11 +164,14 @@ class Particle {
         this.x += this.vx;
         this.y += this.vy;
         this.life--;
-        this.size *= 0.96; // Shrink
+        this.size *= 0.96;
         
         if (this.type === 'ember') {
-            this.vy *= 0.98; // Slow down slightly
-            this.x += Math.sin(this.life * 0.1) * 0.5; // Wiggle
+            this.vy *= 0.98;
+            this.x += Math.sin(this.life * 0.1) * 0.5;
+        } else if (this.type === 'burst') {
+            this.vx *= 0.9;
+            this.vy *= 0.9;
         }
     }
 
@@ -151,9 +183,13 @@ class Particle {
         if (this.type === 'cursor') {
             ctx.shadowBlur = 15;
             ctx.shadowColor = this.color;
+        } else if (this.type === 'burst') {
+             ctx.shadowBlur = 20;
+             ctx.shadowColor = this.color;
+             ctx.globalCompositeOperation = 'lighter';
         } else {
             ctx.shadowBlur = 8;
-            ctx.shadowColor = '#D4380D';
+            ctx.shadowColor = this.color;
         }
         
         ctx.beginPath();
