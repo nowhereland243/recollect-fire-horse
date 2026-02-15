@@ -4,69 +4,67 @@
    ═══════════════════════════════════════════ */
 
 :root {
-  /* ── Colors ── */
-  --ink:        #0A0A0A;
-  --ink-light:  #141414;
+  /* ── Colors (Ink & Ember Palette) ── */
+  --clr-ink:          #0A0A0A;
+  --clr-hero-deep:    #050505;
+  --clr-surface:      #111111;
+  --clr-ivory:        #F5F0E8;
+  --clr-muted:        rgba(245, 240, 232, 0.45);
+  --clr-gold:         #C9A84C;
+  --clr-fire-start:   #D4380D;
+  --clr-fire-end:     #FF6B35;
+
+  /* Legacy aliases */
+  --ink:        var(--clr-ink);
+  --ink-light:  var(--clr-surface);
   --ink-card:   rgba(255, 255, 255, 0.04);
   --ink-border: rgba(255, 255, 255, 0.08);
-
-  --ivory:      #F5F0E8;
+  --ivory:      var(--clr-ivory);
   --ivory-dim:  rgba(245, 240, 232, 0.6);
-  --ivory-mute: rgba(245, 240, 232, 0.35);
-
-  --fire:       #D4380D;
-  --fire-mid:   #E8520E;
-  --ember:      #FF6B35;
-  --gold:       #C9A84C;
+  --ivory-mute: var(--clr-muted);
+  --fire:       var(--clr-fire-start);
+  --ember:      var(--clr-fire-end);
+  --gold:       var(--clr-gold);
   --gold-dim:   rgba(201, 168, 76, 0.5);
 
   /* Gradients */
-  --fire-gradient: linear-gradient(135deg, var(--fire), var(--ember));
+  --fire-gradient: linear-gradient(135deg, var(--clr-fire-start), var(--clr-fire-end));
   --fire-glow:     0 0 30px rgba(212, 56, 13, 0.25);
   --gold-glow:     0 0 20px rgba(201, 168, 76, 0.2);
 
   /* ── Typography ── */
-  --font-serif:  'Noto Serif SC', 'Georgia', serif;
-  --font-sans:   'Inter', 'system-ui', -apple-system, sans-serif;
+  --font-serif:    'Noto Serif SC', 'Georgia', serif;
+  --font-serif-en: 'Playfair Display', 'Georgia', serif;
+  --font-sans:     'Inter', 'system-ui', -apple-system, sans-serif;
 
-  --text-hero:   clamp(3rem, 10vw, 6rem);
-  --text-title:  clamp(1.75rem, 5vw, 2.5rem);
-  --text-h2:     clamp(1.25rem, 3.5vw, 1.75rem);
-  --text-h3:     clamp(1.05rem, 2.5vw, 1.25rem);
-  --text-body:   clamp(0.95rem, 2.2vw, 1.05rem);
-  --text-small:  clamp(0.75rem, 1.8vw, 0.85rem);
-  --text-caption: 0.7rem;
+  --fs-xs:    0.75rem;
+  --fs-sm:    0.875rem;
+  --fs-base:  1rem;
+  --fs-lg:    1.25rem;
+  --fs-xl:    1.5rem;
+  --fs-2xl:   2rem;
 
-  --leading-tight:  1.3;
-  --leading-body:   1.75;
-  --leading-loose:  2;
-
-  --tracking-wide:   0.12em;
-  --tracking-wider:  0.2em;
-  --tracking-widest: 0.35em;
-
-  /* ── Spacing ── */
-  --space-xs:  0.5rem;
-  --space-sm:  1rem;
-  --space-md:  1.5rem;
-  --space-lg:  2.5rem;
-  --space-xl:  4rem;
-  --space-2xl: 6rem;
-  --space-3xl: 10rem;
+  /* ── Spacing Scale ── */
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-5:  1.5rem;
+  --sp-6:  2rem;
+  --sp-7:  2.5rem;
+  --sp-8:  3rem;
+  --sp-9:  4rem;
+  --sp-10: 5rem;
 
   /* ── Layout ── */
-  --content-width:  min(90vw, 640px);
-  --content-narrow: min(85vw, 520px);
+  --max-content:  640px;
+  --nav-h:        56px;
 
   /* ── Motion ── */
   --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
-  --duration-fast: 200ms;
-  --duration-med:  400ms;
-  --duration-slow: 800ms;
 
   /* ── Borders ── */
   --radius-sm: 4px;
   --radius-md: 8px;
-  --radius-lg: 16px;
 }

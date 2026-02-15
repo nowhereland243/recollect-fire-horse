@@ -1,0 +1,299 @@
+/* ═══════════════════════════════════════════════════════════
+   RECOLLECT — Topic Detail Page Styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Header ─── */
+.topic-header {
+  padding: calc(var(--nav-h) + var(--sp-8)) var(--sp-4) var(--sp-6);
+  background: var(--clr-ink);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+.topic-header__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+  text-decoration: none;
+  margin-bottom: var(--sp-6);
+  transition: color 0.3s ease;
+}
+
+.topic-header__back:hover {
+  color: var(--clr-gold);
+}
+
+.topic-header__numeral {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 700;
+  color: var(--clr-gold);
+  line-height: 1;
+  margin-bottom: var(--sp-2);
+  opacity: 0.2;
+}
+
+.topic-header__title {
+  margin-bottom: var(--sp-3);
+}
+
+.topic-header__title-cn {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
+  font-weight: 700;
+  color: var(--clr-ivory);
+  line-height: 1.2;
+}
+
+.topic-header__title-en {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+  margin-top: var(--sp-1);
+}
+
+.topic-header__subtitle {
+  font-family: var(--font-serif-en);
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--clr-ivory);
+  line-height: 1.6;
+  margin-bottom: var(--sp-4);
+}
+
+.topic-header__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+.topic-header__read-time {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: 300;
+  color: var(--clr-muted);
+  letter-spacing: 0.08em;
+}
+
+.topic-header__tags {
+  display: flex;
+  gap: var(--sp-1);
+  flex-wrap: wrap;
+}
+
+.topic-header__tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-gold);
+  background: rgba(201, 168, 76, 0.08);
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+/* ─── Body (Q&A Sections) ─── */
+.topic-body {
+  padding: var(--sp-8) var(--sp-4);
+  background: var(--clr-ink);
+}
+
+.topic-section {
+  margin-bottom: var(--sp-6);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.topic-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.topic-section__question {
+  font-family: var(--font-serif-en);
+  font-size: clamp(1.15rem, 3vw, 1.4rem);
+  font-weight: 400;
+  color: var(--clr-ivory);
+  line-height: 1.5;
+  margin-bottom: var(--sp-3);
+}
+
+.topic-section__answer {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: 300;
+  color: rgba(245, 240, 232, 0.82);
+  line-height: 1.85;
+}
+
+.topic-section__answer p {
+  margin-bottom: var(--sp-3);
+}
+
+.topic-section__divider {
+  border: none;
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
+  margin: var(--sp-6) 0;
+}
+
+/* ─── Closing ─── */
+.topic-closing {
+  text-align: center;
+  padding: var(--sp-8) 0 var(--sp-2);
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
+  margin-top: var(--sp-6);
+}
+
+.topic-closing__text {
+  font-family: var(--font-serif-en);
+  font-size: var(--fs-base);
+  color: var(--clr-ivory);
+  line-height: 1.8;
+  margin-bottom: var(--sp-2);
+}
+
+.topic-closing__attribution {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--clr-muted);
+}
+
+/* ─── Glossary ─── */
+.topic-glossary {
+  padding: var(--sp-6) var(--sp-4) var(--sp-8);
+  background: var(--clr-ink);
+  border-top: 1px solid rgba(245, 240, 232, 0.04);
+}
+
+.topic-glossary__title {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clr-gold);
+  margin-bottom: var(--sp-5);
+}
+
+.topic-glossary__grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.topic-glossary__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px var(--sp-3);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid rgba(245, 240, 232, 0.04);
+}
+
+.topic-glossary__term {
+  grid-row: 1 / 3;
+  font-family: var(--font-serif);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--clr-ivory);
+  align-self: center;
+}
+
+.topic-glossary__pinyin {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--clr-gold);
+}
+
+.topic-glossary__meaning {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 300;
+  color: var(--clr-muted);
+  line-height: 1.5;
+}
+
+/* ─── Prev/Next Navigation ─── */
+.topic-nav {
+  padding: 0 var(--sp-4);
+  background: var(--clr-ink);
+}
+
+.topic-nav .container {
+  display: flex;
+  border-top: 1px solid rgba(245, 240, 232, 0.06);
+}
+
+.topic-nav__link {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--sp-5) var(--sp-3);
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.topic-nav__link:hover {
+  background: var(--clr-surface);
+}
+
+.topic-nav__next {
+  text-align: right;
+  border-left: 1px solid rgba(245, 240, 232, 0.06);
+}
+
+.topic-nav__label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clr-gold);
+}
+
+.topic-nav__title {
+  font-family: var(--font-serif);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--clr-ivory);
+  line-height: 1.4;
+}
+
+/* ─── Footer (topic page - minimal) ─── */
+.footer {
+  padding: var(--sp-5) var(--sp-4);
+  background: var(--clr-ink);
+  border-top: 1px solid rgba(245, 240, 232, 0.04);
+}
+
+.footer__bottom {
+  text-align: center;
+}
+
+.footer__copy {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--clr-muted);
+}

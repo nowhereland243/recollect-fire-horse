@@ -1,13 +1,102 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>recollect</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>RECOLLECT — The Year of the Fire Horse</title>
+  <meta name="description" content="A Chelsea Salon exploring the Lunar New Year through ten cultural lenses. February 16, 2026 · New York." />
+  <meta property="og:title" content="RECOLLECT — The Year of the Fire Horse" />
+  <meta property="og:description" content="A Chelsea Salon exploring the Lunar New Year through ten cultural lenses." />
+  <meta property="og:image" content="/assets/hero.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/landing.css" />
+</head>
+<body>
+
+  <!-- ═══ NAVIGATION ═══ -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__brand">RECOLLECT</a>
+      <div class="nav__links">
+        <a href="#topics" class="nav__link">探索 Topics</a>
+        <a href="/menu.html" class="nav__link">菜单 Menu</a>
+        <a href="/sponsors.html" class="nav__link">赞助 Sponsors</a>
+      </div>
+      <button class="nav__lang" id="lang-toggle" aria-label="Toggle language">EN / 中</button>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="hero">
+    <div class="hero__bg">
+      <img src="/assets/hero.png" alt="Fire Horse" class="hero__img" />
+      <canvas id="particles" class="hero__particles"></canvas>
+    </div>
+    <div class="hero__content">
+      <p class="hero__pre" data-en="Chelsea Salon Series · Volume I" data-cn="切尔西沙龙 · 第一辑">Chelsea Salon Series · Volume I</p>
+      <h1 class="hero__title">
+        <span class="hero__title-main">RECOLLECT</span>
+        <span class="hero__title-sub" data-en="The Year of the Fire Horse" data-cn="丙午火马年">The Year of the Fire Horse</span>
+      </h1>
+      <p class="hero__date" data-en="February 16, 2026 · New York" data-cn="2026年2月16日 · 纽约">February 16, 2026 · New York</p>
+      <div class="hero__scroll">
+        <span data-en="Scroll to explore" data-cn="向下滚动">Scroll to explore</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INTRO ═══ -->
+  <section class="intro" id="intro">
+    <div class="container">
+      <p class="intro__text" data-en="Ten lenses on the Lunar New Year — its origins, customs, commerce, and meaning. We share these reflections not as definitive answers, but as invitations to linger with questions that have no neat resolution." data-cn="十个视角审视农历新年——其起源、风俗、商业与意义。我们分享这些思考，不作为定论，而是邀请您在没有简单答案的问题中停留片刻。">
+        Ten lenses on the Lunar New Year — its origins, customs, commerce, and meaning. We share these reflections not as definitive answers, but as invitations to linger with questions that have no neat resolution.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ TOPICS ═══ -->
+  <section class="topics" id="topics">
+    <div class="container">
+      <div class="topics__grid" id="topics-grid">
+        <!-- Cards injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__sponsors">
+        <p class="footer__sponsors-label" data-en="With gratitude to our sponsors" data-cn="感谢我们的赞助商">With gratitude to our sponsors</p>
+        <div class="footer__logos">
+          <a href="https://www.25hours-hotels.com" target="_blank" rel="noopener" class="footer__logo-link">
+            <img src="/assets/sponsors/25hours.png" alt="25hours Hotels" class="footer__logo" />
+          </a>
+          <a href="https://www.westelm.com" target="_blank" rel="noopener" class="footer__logo-link">
+            <img src="/assets/sponsors/westelm.png" alt="West Elm" class="footer__logo" />
+          </a>
+          <a href="https://www.remymartin.com" target="_blank" rel="noopener" class="footer__logo-link">
+            <img src="/assets/sponsors/remymartin.png" alt="Rémy Martin" class="footer__logo" />
+          </a>
+          <a href="https://maisondetto.com" target="_blank" rel="noopener" class="footer__logo-link">
+            <img src="/assets/sponsors/maisondetto.png" alt="Maison d'Etto" class="footer__logo" />
+          </a>
+          <a href="https://hudsonwilder.com" target="_blank" rel="noopener" class="footer__logo-link">
+            <img src="/assets/sponsors/hudsonwilder.png" alt="Hudson Wilder" class="footer__logo" />
+          </a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2026 RECOLLECT. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
 </html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>RECOLLECT — Topic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/topic.css" />
+</head>
+<body>
+
+  <!-- ═══ NAVIGATION ═══ -->
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__brand">RECOLLECT</a>
+      <div class="nav__links">
+        <a href="/#topics" class="nav__link">探索 Topics</a>
+        <a href="/menu.html" class="nav__link">菜单 Menu</a>
+        <a href="/sponsors.html" class="nav__link">赞助 Sponsors</a>
+      </div>
+      <button class="nav__lang" id="lang-toggle" aria-label="Toggle language">EN / 中</button>
+    </div>
+  </nav>
+
+  <!-- ═══ TOPIC HEADER ═══ -->
+  <header class="topic-header" id="topic-header">
+    <div class="container">
+      <a href="/" class="topic-header__back">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span data-en="Back to all topics" data-cn="返回所有主题">Back to all topics</span>
+      </a>
+      <div class="topic-header__numeral" id="topic-numeral"></div>
+      <h1 class="topic-header__title">
+        <span class="topic-header__title-cn" id="topic-title-cn"></span>
+        <span class="topic-header__title-en" id="topic-title-en"></span>
+      </h1>
+      <p class="topic-header__subtitle" id="topic-subtitle"></p>
+      <div class="topic-header__meta">
+        <span class="topic-header__read-time" id="topic-read-time"></span>
+        <div class="topic-header__tags" id="topic-tags"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ SECTIONS ═══ -->
+  <main class="topic-body" id="topic-body">
+    <div class="container">
+      <!-- Sections injected by JS -->
+    </div>
+  </main>
+
+  <!-- ═══ GLOSSARY ═══ -->
+  <section class="topic-glossary" id="topic-glossary">
+    <div class="container">
+      <h2 class="topic-glossary__title" data-en="Glossary" data-cn="词汇表">Glossary</h2>
+      <div class="topic-glossary__grid" id="glossary-grid">
+        <!-- Glossary items injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ NAVIGATION FOOTER ═══ -->
+  <nav class="topic-nav" id="topic-nav">
+    <div class="container">
+      <a href="#" class="topic-nav__link topic-nav__prev" id="topic-prev">
+        <span class="topic-nav__label" data-en="Previous" data-cn="上一篇">Previous</span>
+        <span class="topic-nav__title" id="prev-title"></span>
+      </a>
+      <a href="#" class="topic-nav__link topic-nav__next" id="topic-next">
+        <span class="topic-nav__label" data-en="Next" data-cn="下一篇">Next</span>
+        <span class="topic-nav__title" id="next-title"></span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2026 RECOLLECT. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/topic.ts"></script>
+</body>
+</html>
