@@ -134,6 +134,74 @@ body {
   transform: translateY(0);
 }
 
+/* ─── Narrative (Layer B) ─── */
+.topic-narrative {
+  margin-bottom: var(--sp-6);
+}
+
+.topic-narrative__section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: var(--sp-5);
+}
+
+.topic-narrative__section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.topic-narrative__heading {
+  font-family: var(--font-serif-en);
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: var(--sp-3);
+  letter-spacing: 0.02em;
+}
+
+.topic-narrative__body {
+  font-family: var(--font-serif-en);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  font-weight: 300;
+  color: rgba(245, 240, 232, 0.82);
+  line-height: 2.0;
+  letter-spacing: 0.01em;
+}
+
+.topic-narrative__body p {
+  margin-bottom: var(--sp-4);
+}
+
+.topic-narrative__body p:last-child {
+  margin-bottom: 0;
+}
+
+.topic-narrative__divider {
+  border: none;
+  border-top: 1px solid rgba(201, 168, 76, 0.08);
+  margin: var(--sp-5) auto;
+  width: 60px;
+}
+
+/* ─── Layer Divider (between narrative and Q&A) ─── */
+.topic-layer-divider {
+  text-align: center;
+  margin: var(--sp-6) 0;
+  padding: var(--sp-4) 0;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.topic-layer-divider__label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ─── Q&A Sections (Layer C) ─── */
 .topic-section__question {
   font-family: var(--font-serif-en);
   font-size: clamp(1.15rem, 3vw, 1.4rem);

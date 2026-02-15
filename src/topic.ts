@@ -3,6 +3,7 @@
 // ═══════════════════════════════════════════════════════════
 
 import { topics } from './data';
+import { narrativeData } from './narrative-data';
 import { initI18n } from './i18n';
 import { VisualFX } from './fx';
 
@@ -62,23 +63,55 @@ function renderTopic() {
     ).join('');
   }
 
-  // Sections (Q&A)
+  // Narrative (Layer B) + Sections (Layer C Q&A)
   const body = document.querySelector('#topic-body .container');
   if (body) {
-    body.innerHTML = topic.sections.map((s, i) => `
-      <article class="topic-section" style="animation-delay: ${i * 0.1}s">
+    let html = '';
+
+    // Layer B — Narrative story
+    const topicNarrative = narrativeData[topic.id];
+    if (topicNarrative) {
+      const sections = topicNarrative.narrative;
+      html += '<div class="topic-narrative">';
+      sections.forEach((s, i) => {
+        html += `<article class="topic-narrative__section" style="animation-delay: ${i * 0.08}s">`;
+        if (s.title) {
+          html += `<h3 class="topic-narrative__heading" style="color:${topic.themeColor || 'var(--clr-gold)'}">${s.title}</h3>`;
+        }
+        html += `<div class="topic-narrative__body">${s.body}</div>`;
+        if (i < sections.length - 1) {
+          html += `<hr class="topic-narrative__divider" style="border-color:${topic.themeColor}22" />`;
+        }
+        html += '</article>';
+      });
+      html += '</div>';
+
+      // Divider between narrative and Q&A
+      html += `<div class="topic-layer-divider" style="border-color:${topic.themeColor}44">
+        <span class="topic-layer-divider__label" style="color:${topic.themeColor}">Questions & Reflections</span>
+      </div>`;
+    }
+
+    // Layer C — Q&A sections
+    html += topic.sections.map((s, i) => `
+      <article class="topic-section" style="animation-delay: ${(topicNarrative ? topicNarrative.narrative.length : 0) * 0.08 + i * 0.1}s">
         <h2 class="topic-section__question">${s.question}</h2>
         <div class="topic-section__answer">
           <p>${s.answer}</p>
         </div>
         ${i < topic.sections.length - 1 ? `<hr class="topic-section__divider" style="border-color:${topic.themeColor}33" />` : ''}
       </article>
-    `).join('') + `
+    `).join('');
+
+    // Closing
+    html += `
       <div class="topic-closing" style="border-color:${topic.themeColor}33">
         <p class="topic-closing__text"><em>${topic.closingLine}</em></p>
         <p class="topic-closing__attribution">— RECOLLECT: The Year of the Fire Horse</p>
       </div>
     `;
+
+    body.innerHTML = html;
   }
 
   // Glossary
@@ -125,7 +158,7 @@ function renderTopic() {
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.topic-section').forEach(el => observer.observe(el));
+  document.querySelectorAll('.topic-section, .topic-narrative__section').forEach(el => observer.observe(el));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
