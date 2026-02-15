@@ -5,6 +5,7 @@
 import { topics } from './data';
 import { narrativeData } from './narrative-data';
 import { initI18n, onLangChange } from './i18n';
+import { initNav } from './nav';
 import { VisualFX } from './fx';
 
 function renderTopic() {
@@ -88,7 +89,7 @@ function renderTopic() {
 
       // Divider between narrative and Q&A
       html += `<div class="topic-layer-divider" style="border-color:${topic.themeColor}44">
-        <span class="topic-layer-divider__label" style="color:${topic.themeColor}">Questions & Reflections</span>
+        <span class="topic-layer-divider__label" style="color:${topic.themeColor}" data-en="Questions & Reflections" data-cn="问题与反思">Questions & Reflections</span>
       </div>`;
     }
 
@@ -163,6 +164,7 @@ function renderTopic() {
 
 document.addEventListener('DOMContentLoaded', () => {
   renderTopic();
+  initNav();
   initI18n();
 
   // Re-render narrative body on language toggle
