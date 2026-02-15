@@ -2,7 +2,7 @@ import { topics } from './data';
 
 import { initI18n } from './i18n';
 import { initAudio } from './audio';
-import { VisualFX } from './fx';
+
 import { initLenisScroll } from './scroll';
 import { initNav } from './nav';
 import gsap from 'gsap';
@@ -64,16 +64,27 @@ function initScrollAnimations() {
   }
 }
 
-// ─── Init ───
+// ... imports
+import { SceneManager } from './webgl/Scene';
+import { HeroParticles } from './webgl/HeroParticles';
+
+// ... 
+
 document.addEventListener('DOMContentLoaded', () => {
   renderTopicCards();
-  initNav();            // Stealth Quantum Nav
+  initNav();
   initScrollAnimations();
-  initLenisScroll();    // Physics Scroll
-  new VisualFX();       // Liquid Cursor & Quantum Explosions
+  initLenisScroll();
   initI18n();
   initAudio();
   
-  // Legacy particles if needed, but VisualFX covers clean cursor
-  // initParticles(); 
+  // Initialize Quantum Particles
+  const scene = new SceneManager();
+  scene.add(new HeroParticles());
+  
+  // Inject Global Grain
+  const grain = document.createElement('div');
+  grain.className = 'quantum-grain';
+  document.body.appendChild(grain);
+  
 });
