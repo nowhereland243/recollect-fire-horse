@@ -214,6 +214,8 @@ hr {
     display: flex;
     position: fixed;
     inset: 0;
+    width: 100vw;
+    height: 100vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -224,6 +226,7 @@ hr {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    overflow: hidden;
     transition: opacity 0.4s ease, visibility 0.4s ease;
   }
 
