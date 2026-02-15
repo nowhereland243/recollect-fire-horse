@@ -11,7 +11,8 @@ let scrollStopTimer: number | null = null;
 
 export function initAudio() {
   // Only initialize on landing page
-  if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
+  const p = window.location.pathname;
+  if (p !== '/' && p !== '/index.html' && p !== '/recollect2026' && p !== '/recollect2026/' && p !== '/recollect2026/index.html') return;
 
   const toggle = document.getElementById('audio-toggle');
   if (!toggle) return;
