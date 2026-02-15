@@ -211,22 +211,25 @@ hr {
 
 @media (max-width: 768px) {
   .nav__links {
-    display: none;
+    display: flex;
     position: fixed;
     inset: 0;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    gap: var(--sp-4);
     background: rgba(8, 8, 8, 0.98);
     backdrop-filter: blur(20px);
     z-index: 101;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
   }
 
   .nav--open .nav__links {
-    display: flex;
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
   }
 
@@ -378,4 +381,6 @@ hr {
   font-size: 0.65rem;
   color: rgba(255, 255, 255, 0.2);
   letter-spacing: 0.1em;
+  text-align: center;
+  line-height: 1.8;
 }
