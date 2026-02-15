@@ -83,34 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const scene = new SceneManager();
   const heroParticles = new HeroParticles();
   scene.add(heroParticles);
-  scene.add(new CursorParticles()); // Add Gold Sparks
-  
-  // Pass scroll to particles
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    (heroParticles as any).setScroll(scrollY);
-  });
+  scene.add(new CursorParticles()); // Gold Sparks
   
   // Inject Global Grain
   const grain = document.createElement('div');
   grain.className = 'quantum-grain';
   document.body.appendChild(grain);
   
-  // Inject Universe Layout Elements
+  // Inject Timeline Line
   const topicsGrid = document.querySelector('.topics');
   if (topicsGrid) {
       const timeline = document.createElement('div');
       timeline.className = 'timeline-line';
       topicsGrid.prepend(timeline);
-  }
-  
-  const heroSection = document.querySelector('.hero');
-  if (heroSection) {
-      const grad = document.createElement('div');
-      grad.style.position = 'absolute';
-      grad.style.inset = '0';
-      grad.style.background = 'radial-gradient(circle at center, #5a1a0b 0%, #2b0d05 40%, #000000 100%)';
-      grad.style.zIndex = '-2';
-      heroSection.prepend(grad);
   }
 });

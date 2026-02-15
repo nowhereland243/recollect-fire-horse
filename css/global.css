@@ -21,7 +21,9 @@ body {
   font-size: var(--fs-base);
   line-height: 1.75;
   color: var(--clr-ivory);
-  background-color: var(--clr-ink);
+  /* Deep Crimson Gradient — single source of truth */
+  background: radial-gradient(ellipse at top center, #600000 0%, #2a0505 45%, #1a0000 100%);
+  background-attachment: fixed;
   min-height: 100vh;
   overflow-x: hidden;
 }

@@ -176,11 +176,11 @@ export class CursorParticles extends ParticleSystem {
         );
         
         p.life = 1.0;
-        p.size = 10.0 + Math.random() * 10.0;
-        p.color.setHex(0xFFD700); // Gold
+        p.size = 12.0 + Math.random() * 12.0;
+        p.color.set('#f4f0ce'); // User-specified gold
         
-        // Occasional red spark
-        if (Math.random() > 0.8) p.color.setHex(0xD4380D);
+        // Occasional warm spark
+        if (Math.random() > 0.85) p.color.setHex(0xD4380D);
     }
     
     resize(_width: number, _height: number) {}

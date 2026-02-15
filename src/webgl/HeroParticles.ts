@@ -1,15 +1,16 @@
 import * as THREE from 'three';
 import { ParticleSystem } from './ParticleSystem';
 
+// Gentle curl-noise particles — no scroll explosion
 const vertexShader = `
 uniform float uTime;
 uniform float uPixelRatio;
-uniform vec2 uMouse;
 
 attribute vec3 aRandom; 
 attribute vec3 aColor; 
 
 varying vec3 vColor;
+varying float vAlpha;
 
 // Simplex Noise
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -64,67 +65,53 @@ float snoise(vec3 v) {
 }
 
 void main() {
-    float t = uTime * 0.15; 
+    float t = uTime * 0.12; 
     
     vec3 pos = position;
     
-    // Curl/Flow
-    float noiseVal = snoise(vec3(pos.x * 0.8 + t, pos.y * 0.8 - t * 0.5, pos.z + t));
-    float drift = noiseVal * 0.2 * aRandom.y;
+    // Gentle curl/flow — the "living painting" effect
+    float noiseVal = snoise(vec3(pos.x * 0.6 + t, pos.y * 0.6 - t * 0.3, pos.z + t * 0.5));
+    float drift = noiseVal * 0.15 * aRandom.y;
     
     pos.x += drift;
-    pos.y += drift;
-    pos.z += drift * 1.5; 
-    
-    // Scroll Dispersion
-    // When scrolling down, particles explode/disperse
-    float scrollFactor = smoothstep(0.0, 800.0, uScroll); 
-    float explosion = scrollFactor * 20.0;
-    
-    // Random direction explosion
-    pos.x += (aRandom.x - 0.5) * explosion;
-    pos.y += (aRandom.y - 0.5) * explosion;
-    pos.z += (aRandom.z) * explosion * 2.0;
-
-    // Lift them up slightly as they disperse
-    pos.y += uScroll * 0.02;
+    pos.y += drift * 0.8;
+    pos.z += drift * 0.5; 
     
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mvPosition;
     
-    // Fade out based on dispersion
-    // Pass dispersion to fragment via vColor? Or just alpha?
-    // Let's fade alpha in fragment using position?
-    // For now, size reduction
-    gl_PointSize = (2.5 * aRandom.z + 1.5) * uPixelRatio * (1.0 - scrollFactor * 0.5);
+    gl_PointSize = (2.0 * aRandom.z + 1.0) * uPixelRatio;
     gl_PointSize *= (1.0 / -mvPosition.z);
     
     vColor = aColor;
+    vAlpha = 0.85;
 }
 `;
 
 const fragmentShader = `
 varying vec3 vColor;
+varying float vAlpha;
 
 void main() {
     float r = distance(gl_PointCoord, vec2(0.5));
     if (r > 0.5) discard;
-    float alpha = 1.0 - smoothstep(0.3, 0.5, r);
-    gl_FragColor = vec4(vColor, alpha * 0.9);
+    float alpha = 1.0 - smoothstep(0.2, 0.5, r);
+    gl_FragColor = vec4(vColor, alpha * vAlpha);
 }
 `;
 
 export class HeroParticles extends ParticleSystem {
+    group = new THREE.Group();
+
     constructor() {
         super(0);
-        // Start with empty
         this.mesh = new THREE.Points(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial());
         this.init();
     }
 
     init() {
         const img = new Image();
-        img.src = '/hero_horse.png'; // Use the new PNG
+        img.src = '/hero_horse.png';
         img.crossOrigin = 'Anonymous';
         img.onload = () => this.processImage(img);
     }
@@ -134,8 +121,7 @@ export class HeroParticles extends ParticleSystem {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        // Downsample
-        const width = 300; // Increased density for fidelity
+        const width = 300;
         const scale = width / img.width;
         const height = Math.floor(img.height * scale);
         
@@ -154,15 +140,13 @@ export class HeroParticles extends ParticleSystem {
                 const r = data[i] / 255;
                 const g = data[i + 1] / 255;
                 const b = data[i + 2] / 255;
-                // const a = data[i + 3] / 255; 
                 
                 const brightness = (r + g + b) / 3; 
                 
-                // Only spawn if valid
-                if (brightness > 0.1) { // Lower threshold to catch faint details
-                    const px = (x - width / 2) * 0.035; // Tighter scale
+                if (brightness > 0.1) {
+                    const px = (x - width / 2) * 0.035;
                     const py = -(y - height / 2) * 0.035;
-                    const pz = (Math.random() - 0.5) * 0.2; // Flatter depth for image clarity
+                    const pz = (Math.random() - 0.5) * 0.2;
                     
                     positions.push(px, py, pz);
                     colors.push(r, g, b);
@@ -183,8 +167,6 @@ export class HeroParticles extends ParticleSystem {
             fragmentShader,
             uniforms: {
                 uTime: { value: 0 },
-                uScroll: { value: 0 },
-                uMouse: { value: new THREE.Vector2() },
                 uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) }
             },
             transparent: true,
@@ -192,16 +174,9 @@ export class HeroParticles extends ParticleSystem {
             blending: THREE.AdditiveBlending
         });
 
-        // Update the mesh in place
         this.mesh.geometry.dispose();
         this.mesh.geometry = geometry;
         this.mesh.material = material;
-    }
-
-    setScroll(y: number) {
-        if ((this.mesh.material as THREE.ShaderMaterial).uniforms) {
-            (this.mesh.material as THREE.ShaderMaterial).uniforms.uScroll.value = y;
-        }
     }
 
     update(time: number, _delta: number) {

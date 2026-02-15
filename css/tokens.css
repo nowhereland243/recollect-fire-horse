@@ -55,17 +55,17 @@
 
 :root {
   /* ── Colors (Ink & Ember Palette) ── */
-  --clr-ink:          #080808;  /* Slightly deeper black */
+  --clr-ink:          #1a0000;  /* Deep crimson-black */
   --clr-hero-deep:    #030303;
   --clr-surface:      #0F0F0F;
   --clr-ivory:        #F5F0E8;
   --clr-muted:        rgba(245, 240, 232, 0.55);
   
-  /* Metallic Gold Gradients */
-  --gold-start:       #DFBD69;
-  --gold-end:         #926F34;
-  --gold-gradient:    linear-gradient(135deg, #DFBD69 0%, #926F34 100%);
-  --gold-text-shine:  linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  /* Gold — User-specified flat color */
+  --gold-start:       #f4f0ce;
+  --gold-end:         #f4f0ce;
+  --gold-gradient:    #f4f0ce;
+  --gold-text-shine:  #f4f0ce;
   
   --clr-fire-start:   #D4380D;
   --clr-fire-end:     #FF6B35;
@@ -80,7 +80,7 @@
   --ivory-mute: var(--clr-muted);
   --fire:       var(--clr-fire-start);
   --ember:      var(--clr-fire-end);
-  --gold:       #C9A84C; /* Fallback flat gold */
+  --gold:       #f4f0ce;
 
   /* Gradients */
   --fire-gradient: linear-gradient(135deg, var(--clr-fire-start), var(--clr-fire-end));
