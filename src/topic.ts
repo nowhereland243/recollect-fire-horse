@@ -8,23 +8,29 @@ import { initI18n, onLangChange } from './i18n';
 import { initNav } from './nav';
 import { VisualFX } from './fx';
 
+// Extract topic slug from clean URL path or fallback to ?t= query param
+function getTopicSlug(): string | null {
+  const path = window.location.pathname;
+  // Match /recollect2026/{slug} or /{slug}
+  const cleanMatch = path.match(/\/recollect2026\/([a-z-]+)$/i);
+  if (cleanMatch) return cleanMatch[1];
+  // Fallback to ?t= query param for backward compat
+  return new URLSearchParams(window.location.search).get('t');
+}
+
 function renderTopic() {
-  const params = new URLSearchParams(window.location.search);
-  const idCursor = params.get('t');
+  const idCursor = getTopicSlug();
 
   // Find topic by string ID
   const topicIndex = topics.findIndex(t => t.id === idCursor);
   const topic = topics[topicIndex];
 
   if (!topic) {
-    // Fallback or redirect? 
-    // If no ID, maybe default to first? Or redirect home.
     if (!idCursor) {
-        window.location.href = '/?t=origins'; // Redirect to first if empty
+        window.location.href = '/recollect2026/origins';
         return;
     }
-    // If invalid ID, redirect home
-    window.location.href = '/';
+    window.location.href = '/recollect2026';
     return;
   }
 
@@ -135,7 +141,7 @@ function renderTopic() {
 
   if (topicIndex > 0) {
     const prev = topics[topicIndex - 1];
-    if (prevLink) prevLink.href = `/topic.html?t=${prev.id}`;
+    if (prevLink) prevLink.href = `/recollect2026/${prev.id}`;
     if (prevTitle) prevTitle.textContent = `${prev.numeralEN} · ${prev.titleCN} · ${prev.titleEN}`;
   } else {
     if (prevLink) prevLink.parentElement!.style.visibility = 'hidden'; // Hide the container (link)
@@ -143,7 +149,7 @@ function renderTopic() {
 
   if (topicIndex < topics.length - 1) {
     const next = topics[topicIndex + 1];
-    if (nextLink) nextLink.href = `/topic.html?t=${next.id}`;
+    if (nextLink) nextLink.href = `/recollect2026/${next.id}`;
     if (nextTitle) nextTitle.textContent = `${next.numeralEN} · ${next.titleCN} · ${next.titleEN}`;
   } else {
     if (nextLink) nextLink.parentElement!.style.visibility = 'hidden';

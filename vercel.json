@@ -5,6 +5,19 @@
   "rewrites": [
     { "source": "/recollect2026", "destination": "/index.html" },
     { "source": "/recollect2026/", "destination": "/index.html" },
+    { "source": "/recollect2026/story", "destination": "/story.html" },
+    { "source": "/recollect2026/menu", "destination": "/menu.html" },
+    { "source": "/recollect2026/nourishment", "destination": "/menu.html" },
+    { "source": "/recollect2026/origins", "destination": "/topic.html" },
+    { "source": "/recollect2026/evolution", "destination": "/topic.html" },
+    { "source": "/recollect2026/hktw", "destination": "/topic.html" },
+    { "source": "/recollect2026/overseas", "destination": "/topic.html" },
+    { "source": "/recollect2026/zodiac", "destination": "/topic.html" },
+    { "source": "/recollect2026/customs", "destination": "/topic.html" },
+    { "source": "/recollect2026/goods", "destination": "/topic.html" },
+    { "source": "/recollect2026/homebound", "destination": "/topic.html" },
+    { "source": "/recollect2026/commerce", "destination": "/topic.html" },
+    { "source": "/recollect2026/vision", "destination": "/topic.html" },
     { "source": "/recollect2026/:path*", "destination": "/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]

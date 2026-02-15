@@ -13,7 +13,7 @@ function renderTopicCards() {
   if (!container) return;
 
   container.innerHTML = topics.map((t, i) => `
-    <a href="/topic.html?t=${t.id}" class="topic-card" data-topic="${t.id}" style="transition-delay: ${i * 0.05}s">
+    <a href="/recollect2026/${t.id}" class="topic-card" data-topic="${t.id}" style="transition-delay: ${i * 0.05}s">
       <div class="topic-card__header">
         <div class="topic-card__numeral">${t.numeralEN} <span class="cn">${t.numeral}</span></div>
       </div>
