@@ -67,6 +67,7 @@ function initScrollAnimations() {
 // ... imports
 import { SceneManager } from './webgl/Scene';
 import { HeroParticles } from './webgl/HeroParticles';
+import { CursorParticles } from './webgl/CursorParticles';
 
 // ... 
 
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const scene = new SceneManager();
   const heroParticles = new HeroParticles();
   scene.add(heroParticles);
+  scene.add(new CursorParticles()); // Add Gold Sparks
   
   // Pass scroll to particles
   window.addEventListener('scroll', () => {

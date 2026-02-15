@@ -135,7 +135,7 @@ export class HeroParticles extends ParticleSystem {
         if (!ctx) return;
 
         // Downsample
-        const width = 200; 
+        const width = 300; // Increased density for fidelity
         const scale = width / img.width;
         const height = Math.floor(img.height * scale);
         
@@ -154,13 +154,15 @@ export class HeroParticles extends ParticleSystem {
                 const r = data[i] / 255;
                 const g = data[i + 1] / 255;
                 const b = data[i + 2] / 255;
-                const brightness = (r + g + b) / 3; // Simple brightness
+                // const a = data[i + 3] / 255; 
                 
-                // Only spawn if bright enough or red enough
-                if (brightness > 0.15) {
-                    const px = (x - width / 2) * 0.05;
-                    const py = -(y - height / 2) * 0.05;
-                    const pz = (Math.random() - 0.5) * 0.5;
+                const brightness = (r + g + b) / 3; 
+                
+                // Only spawn if valid
+                if (brightness > 0.1) { // Lower threshold to catch faint details
+                    const px = (x - width / 2) * 0.035; // Tighter scale
+                    const py = -(y - height / 2) * 0.035;
+                    const pz = (Math.random() - 0.5) * 0.2; // Flatter depth for image clarity
                     
                     positions.push(px, py, pz);
                     colors.push(r, g, b);
