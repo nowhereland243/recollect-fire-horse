@@ -6,6 +6,8 @@ import { topics } from './data';
 import { initParticles } from './particles';
 import { initI18n } from './i18n';
 import { initAudio } from './audio';
+import { initLenisScroll } from './scroll';
+import { VisualFX } from './fx';
 
 // ─── Build Topic Cards ───
 function renderTopicCards() {
@@ -78,26 +80,18 @@ function initNavScroll() {
   }, { passive: true });
 }
 
-// ─── Smooth Scroll for Anchor Links ───
-function initSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = document.querySelector((anchor as HTMLAnchorElement).getAttribute('href')!);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-}
+
 
 // ─── Init ───
 document.addEventListener('DOMContentLoaded', () => {
   renderTopicCards();
   initScrollAnimations();
   initNavScroll();
-  initSmoothScroll();
   initParticles();
   initI18n();
   initAudio();
+  
+  // New "Alchemist" Effects
+  initLenisScroll();
+  new VisualFX();
 });
