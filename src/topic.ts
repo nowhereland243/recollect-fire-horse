@@ -96,9 +96,9 @@ function renderTopic() {
     // Layer C — Q&A sections
     html += topic.sections.map((s, i) => `
       <article class="topic-section" style="animation-delay: ${(topicNarrative ? topicNarrative.narrative.length : 0) * 0.08 + i * 0.1}s">
-        <h2 class="topic-section__question">${s.question}</h2>
+        <h2 class="topic-section__question" data-en="${s.question.replace(/"/g, '&quot;')}" data-cn="${(s.questionCN || s.question).replace(/"/g, '&quot;')}">${s.question}</h2>
         <div class="topic-section__answer">
-          <p>${s.answer}</p>
+          <p data-en="${s.answer.replace(/"/g, '&quot;')}" data-cn="${(s.answerCN || s.answer).replace(/"/g, '&quot;')}">${s.answer}</p>
         </div>
         ${i < topic.sections.length - 1 ? `<hr class="topic-section__divider" style="border-color:${topic.themeColor}33" />` : ''}
       </article>
