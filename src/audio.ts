@@ -1,77 +1,94 @@
 // ═══════════════════════════════════════════════════════════
-// RECOLLECT — Audio Ambience Controller
-// Handles background loop and user toggle
+// RECOLLECT — Scroll-Triggered Audio
+// Sound plays ONLY while scrolling and ONLY on landing page
 // ═══════════════════════════════════════════════════════════
 
+let audio: HTMLAudioElement | null = null;
+let isEnabled = false;
+let isPlaying = false;
+let fadeTimer: number | null = null;
+let scrollStopTimer: number | null = null;
+
 export function initAudio() {
+  // Only initialize on landing page
+  if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
+
   const toggle = document.getElementById('audio-toggle');
   if (!toggle) return;
 
-  const audio = new Audio('/assets/ambience.mp3');
+  audio = new Audio('/assets/ambience.mp3');
   audio.loop = true;
-  audio.volume = 0; // Start silent
-
-  let isPlaying = false;
+  audio.volume = 0;
 
   toggle.addEventListener('click', () => {
-    if (isPlaying) {
-      // Fade out and pause
-      fadeOut(audio, () => {
-        audio.pause();
-        toggle.textContent = 'SOUND OFF';
-        toggle.classList.remove('active');
+    isEnabled = !isEnabled;
+    toggle.textContent = isEnabled ? 'SOUND ON' : 'SOUND OFF';
+    toggle.classList.toggle('active', isEnabled);
+
+    if (!isEnabled && isPlaying) {
+      fadeOut(() => {
+        audio!.pause();
         isPlaying = false;
-      });
-    } else {
-      // Play and fade in
-      audio.play().then(() => {
-        fadeIn(audio);
-        toggle.textContent = 'SOUND ON';
-        toggle.classList.add('active');
-        isPlaying = true;
-      }).catch(err => {
-        console.warn('Audio autoplay blocked:', err);
       });
     }
   });
+
+  // Listen for scroll events
+  window.addEventListener('scroll', onScroll, { passive: true });
 }
 
-function fadeIn(audio: HTMLAudioElement) {
-  const targetVolume = 0.5; // Max volume 50% for background
-  const step = 0.02;
-  const interval = 50;
+function onScroll() {
+  if (!isEnabled || !audio) return;
 
-  // Clear any existing fade
-  // @ts-ignore
-  if (audio.fadeInterval) clearInterval(audio.fadeInterval);
+  // Start playing if not already
+  if (!isPlaying) {
+    audio.play().then(() => {
+      isPlaying = true;
+      fadeIn();
+    }).catch(() => {});
+  } else {
+    // Already playing — boost volume
+    fadeIn();
+  }
 
-  // @ts-ignore
-  audio.fadeInterval = setInterval(() => {
+  // Reset the stop timer — will fade out after 500ms of no scrolling
+  if (scrollStopTimer) clearTimeout(scrollStopTimer);
+  scrollStopTimer = window.setTimeout(() => {
+    if (isPlaying && isEnabled) {
+      fadeOut(() => {
+        // Keep playing at 0 volume so we can resume instantly
+      });
+    }
+  }, 500);
+}
+
+function fadeIn() {
+  if (!audio) return;
+  if (fadeTimer) clearInterval(fadeTimer);
+
+  const targetVolume = 0.35;
+  fadeTimer = window.setInterval(() => {
+    if (!audio) return;
     if (audio.volume < targetVolume) {
-      audio.volume = Math.min(targetVolume, audio.volume + step);
+      audio.volume = Math.min(targetVolume, audio.volume + 0.03);
     } else {
-      // @ts-ignore
-      clearInterval(audio.fadeInterval);
+      if (fadeTimer) clearInterval(fadeTimer);
     }
-  }, interval);
+  }, 30);
 }
 
-function fadeOut(audio: HTMLAudioElement, callback: () => void) {
-  const step = 0.05;
-  const interval = 50;
+function fadeOut(callback?: () => void) {
+  if (!audio) return;
+  if (fadeTimer) clearInterval(fadeTimer);
 
-  // Clear any existing fade
-  // @ts-ignore
-  if (audio.fadeInterval) clearInterval(audio.fadeInterval);
-
-  // @ts-ignore
-  audio.fadeInterval = setInterval(() => {
-    if (audio.volume > 0) {
-      audio.volume = Math.max(0, audio.volume - step);
+  fadeTimer = window.setInterval(() => {
+    if (!audio) return;
+    if (audio.volume > 0.01) {
+      audio.volume = Math.max(0, audio.volume - 0.04);
     } else {
-      // @ts-ignore
-      clearInterval(audio.fadeInterval);
-      callback();
+      audio.volume = 0;
+      if (fadeTimer) clearInterval(fadeTimer);
+      if (callback) callback();
     }
-  }, interval);
+  }, 30);
 }

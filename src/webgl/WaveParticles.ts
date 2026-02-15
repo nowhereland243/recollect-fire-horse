@@ -2,14 +2,14 @@ import * as THREE from 'three';
 import { ParticleSystem } from './ParticleSystem';
 
 /**
- * WaveParticles — Flowing particle terrain behind topics section.
- * Inspired by Colorpong Cosmos: noise-driven wave/mountain terrain
- * that reacts to scroll and mouse position.
+ * WaveParticles — Flowing energy terrain behind topics section.
+ * Colorpong Cosmos-inspired: noise-driven mountain/wave terrain
+ * that VISIBLY reacts to scroll and mouse.
  */
 
 const vertexShader = `
 uniform float uTime;
-uniform float uScroll;
+uniform float uScrollSpeed;
 uniform vec2 uMouse;
 uniform float uPixelRatio;
 
@@ -18,7 +18,7 @@ attribute float aRandom;
 varying float vAlpha;
 varying float vHeight;
 
-// Simplex Noise
+// Simplex Noise (3D)
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
@@ -69,36 +69,45 @@ float snoise(vec3 v) {
 void main() {
     vec3 pos = position;
     
-    float t = uTime * 0.15;
+    float t = uTime * 0.18;
     
-    // Multi-octave noise terrain
-    float n1 = snoise(vec3(pos.x * 0.3 + t, pos.z * 0.3 - t * 0.2, 0.0));
-    float n2 = snoise(vec3(pos.x * 0.7 - t * 0.3, pos.z * 0.7 + t * 0.15, 1.0)) * 0.5;
-    float n3 = snoise(vec3(pos.x * 1.5 + t * 0.1, pos.z * 1.5 - t * 0.4, 2.0)) * 0.25;
+    // Multi-octave terrain — stronger amplitude
+    float n1 = snoise(vec3(pos.x * 0.25 + t, pos.z * 0.25 - t * 0.15, 0.0));
+    float n2 = snoise(vec3(pos.x * 0.6 - t * 0.25, pos.z * 0.6 + t * 0.1, 1.0)) * 0.6;
+    float n3 = snoise(vec3(pos.x * 1.2 + t * 0.08, pos.z * 1.2 - t * 0.3, 2.0)) * 0.3;
     
-    float height = (n1 + n2 + n3) * 0.8;
+    float height = (n1 + n2 + n3) * 1.2;
+    
+    // Scroll energy — particles get MORE turbulent and rise when scrolling
+    float scrollEnergy = uScrollSpeed;
+    height += scrollEnergy * (0.3 + aRandom * 0.5);
+    
+    // Rising sparks when scrolling — some particles lift off
+    float liftChance = step(0.85, aRandom);
+    pos.y += liftChance * scrollEnergy * 2.0;
     
     // Mouse influence — particles rise toward cursor
     float mouseDist = length(pos.xz - uMouse);
-    float mouseInfluence = smoothstep(3.0, 0.0, mouseDist) * 0.6;
+    float mouseInfluence = smoothstep(4.0, 0.0, mouseDist) * 1.0;
     height += mouseInfluence;
     
-    // Add gentle random wiggle
-    height += sin(uTime * 2.0 + aRandom * 6.28) * 0.03 * aRandom;
+    // Gentle random wiggle
+    height += sin(uTime * 2.5 + aRandom * 6.28) * 0.05;
     
-    pos.y = height;
+    pos.y += height;
     
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mvPosition;
     
-    // Size: bigger particles on peaks, smaller in valleys
-    float sizeBase = 1.2 + height * 0.5;
+    // Size: bigger on peaks + bigger during scroll
+    float sizeBase = 1.8 + height * 0.6 + scrollEnergy * 1.0;
     gl_PointSize = sizeBase * uPixelRatio;
     gl_PointSize *= (1.0 / -mvPosition.z);
     
-    // Alpha: fade edges, brighten peaks
-    float edgeFade = smoothstep(8.0, 5.0, abs(pos.x)) * smoothstep(5.0, 3.0, abs(pos.z));
-    vAlpha = edgeFade * (0.15 + height * 0.25 + mouseInfluence * 0.4);
+    // Alpha: much more visible now
+    float edgeFade = smoothstep(10.0, 6.0, abs(pos.x)) * smoothstep(6.0, 3.0, abs(pos.z));
+    float baseAlpha = 0.35 + height * 0.3 + mouseInfluence * 0.4 + scrollEnergy * 0.3;
+    vAlpha = edgeFade * clamp(baseAlpha, 0.0, 0.9);
     vHeight = height;
 }
 `;
@@ -111,12 +120,12 @@ void main() {
     float r = distance(gl_PointCoord, vec2(0.5));
     if (r > 0.5) discard;
     
-    float alpha = (1.0 - smoothstep(0.15, 0.5, r)) * vAlpha;
+    float alpha = (1.0 - smoothstep(0.1, 0.5, r)) * vAlpha;
     
-    // Color: cream gold with slight warmth on peaks
+    // Color: cream gold base, brighter warm on peaks
     vec3 baseColor = vec3(0.957, 0.941, 0.808); // #f4f0ce
-    vec3 peakColor = vec3(1.0, 0.85, 0.7);      // warm highlight
-    vec3 color = mix(baseColor, peakColor, clamp(vHeight * 0.5, 0.0, 1.0));
+    vec3 peakColor = vec3(1.0, 0.9, 0.75);      // warm highlight
+    vec3 color = mix(baseColor, peakColor, clamp(vHeight * 0.4, 0.0, 1.0));
     
     gl_FragColor = vec4(color, alpha);
 }
@@ -125,6 +134,8 @@ void main() {
 export class WaveParticles extends ParticleSystem {
     private mouseWorld = new THREE.Vector2(0, 0);
     private scrollY = 0;
+    private lastScrollY = 0;
+    private scrollSpeed = 0;
     private topicsTop = 0;
     private topicsHeight = 0;
 
@@ -135,11 +146,11 @@ export class WaveParticles extends ParticleSystem {
     }
 
     init() {
-        // Grid of particles
-        const gridW = 120; // columns
-        const gridH = 60;  // rows  
-        const spacingX = 0.14;
-        const spacingZ = 0.14;
+        // Denser grid for more visible terrain
+        const gridW = 150;
+        const gridH = 80;
+        const spacingX = 0.12;
+        const spacingZ = 0.10;
         
         const positions: number[] = [];
         const randoms: number[] = [];
@@ -148,9 +159,7 @@ export class WaveParticles extends ParticleSystem {
             for (let ix = 0; ix < gridW; ix++) {
                 const x = (ix - gridW / 2) * spacingX;
                 const z = (iz - gridH / 2) * spacingZ;
-                const y = 0;
-                
-                positions.push(x, y, z);
+                positions.push(x, 0, z);
                 randoms.push(Math.random());
             }
         }
@@ -166,7 +175,7 @@ export class WaveParticles extends ParticleSystem {
             fragmentShader,
             uniforms: {
                 uTime: { value: 0 },
-                uScroll: { value: 0 },
+                uScrollSpeed: { value: 0 },
                 uMouse: { value: new THREE.Vector2(0, 0) },
                 uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) }
             },
@@ -179,60 +188,58 @@ export class WaveParticles extends ParticleSystem {
         this.mesh.geometry = geometry;
         this.mesh.material = material;
         
-        // Position below hero — tilted grid facing camera
-        this.mesh.rotation.x = -0.6; // Tilt toward camera
-        this.mesh.position.y = -2.5; // Below hero particles
-        this.mesh.position.z = -1;
+        // Position: closer to camera, tilted toward viewer
+        this.mesh.rotation.x = -0.55;
+        this.mesh.position.y = -1.8;
+        this.mesh.position.z = 0;
         
-        // Track scroll and mouse
         this.bindEvents();
     }
 
     private bindEvents() {
         window.addEventListener('scroll', () => {
             this.scrollY = window.scrollY;
-            this.updatePosition();
         }, { passive: true });
         
         window.addEventListener('mousemove', (e) => {
-            // Convert screen coords to approximate world coords on the wave plane
             const nx = (e.clientX / window.innerWidth) * 2 - 1;
             const ny = -(e.clientY / window.innerHeight) * 2 + 1;
-            this.mouseWorld.set(nx * 6, ny * 4);
+            this.mouseWorld.set(nx * 8, ny * 5);
         }, { passive: true });
 
-        // Cache topics section position
-        requestAnimationFrame(() => {
+        // Cache topics position after layout
+        setTimeout(() => {
             const topics = document.querySelector('.topics');
             if (topics) {
                 const rect = topics.getBoundingClientRect();
                 this.topicsTop = rect.top + window.scrollY;
                 this.topicsHeight = rect.height;
             }
-        });
-    }
-
-    private updatePosition() {
-        // Calculate visibility based on scroll position relative to topics section
-        const viewportH = window.innerHeight;
-        const progress = (this.scrollY - this.topicsTop + viewportH) / (this.topicsHeight + viewportH);
-        
-        // Only visible when topics section is in view
-        const visible = progress > 0 && progress < 1;
-        this.mesh.visible = visible;
-        
-        if (visible) {
-            // Parallax: wave moves up slowly as you scroll down
-            const parallax = (progress - 0.5) * 2;
-            this.mesh.position.y = -2.5 + parallax * 1.5;
-        }
+        }, 500);
     }
 
     update(time: number, _delta: number) {
+        // Calculate scroll speed (smoothed)
+        const rawSpeed = Math.abs(this.scrollY - this.lastScrollY);
+        this.scrollSpeed += (Math.min(rawSpeed * 0.08, 2.0) - this.scrollSpeed) * 0.1;
+        this.lastScrollY = this.scrollY;
+        
+        // Visibility: only show when topics section is in viewport
+        const viewportH = window.innerHeight;
+        const progress = (this.scrollY - this.topicsTop + viewportH) / (this.topicsHeight + viewportH);
+        const visible = progress > -0.1 && progress < 1.1;
+        this.mesh.visible = visible;
+        
+        if (visible) {
+            // Parallax
+            const parallax = (progress - 0.5) * 2;
+            this.mesh.position.y = -1.8 + parallax * 1.2;
+        }
+        
         const mat = this.mesh.material as THREE.ShaderMaterial;
         if (mat.uniforms) {
             mat.uniforms.uTime.value = time;
-            mat.uniforms.uScroll.value = this.scrollY;
+            mat.uniforms.uScrollSpeed.value = this.scrollSpeed;
             mat.uniforms.uMouse.value.copy(this.mouseWorld);
         }
     }
@@ -242,12 +249,13 @@ export class WaveParticles extends ParticleSystem {
         if (mat.uniforms) {
             mat.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2);
         }
-        // Recache topics position on resize
-        const topics = document.querySelector('.topics');
-        if (topics) {
-            const rect = topics.getBoundingClientRect();
-            this.topicsTop = rect.top + window.scrollY;
-            this.topicsHeight = rect.height;
-        }
+        setTimeout(() => {
+            const topics = document.querySelector('.topics');
+            if (topics) {
+                const rect = topics.getBoundingClientRect();
+                this.topicsTop = rect.top + window.scrollY;
+                this.topicsHeight = rect.height;
+            }
+        }, 100);
     }
 }
