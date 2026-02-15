@@ -16,7 +16,7 @@ export function initAudio() {
   const toggle = document.getElementById('audio-toggle');
   if (!toggle) return;
 
-  audio = new Audio('/assets/ambience.mp3');
+  audio = new Audio('/assets/ambient-audio.mp3');
   audio.loop = true;
   audio.volume = 0;
 
