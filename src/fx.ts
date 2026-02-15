@@ -12,6 +12,9 @@ export class VisualFX {
     hoverColor: string = '#DFBD69';
     scrollY: number = 0;
     viewH: number = window.innerHeight;
+    lastScrollY: number = 0;
+    topicsTop: number = 0;
+    topicsBottom: number = 0;
     
     constructor() {
         this.canvas = document.createElement('canvas');
@@ -37,7 +40,10 @@ export class VisualFX {
         }, { passive: true });
         
         // Defer listener attachment to ensure DOM is ready
-        setTimeout(() => this.initCardListeners(), 100);
+        setTimeout(() => {
+            this.initCardListeners();
+            this.measureTopics();
+        }, 100);
         this.loop();
     }
 
@@ -46,6 +52,16 @@ export class VisualFX {
         this.height = window.innerHeight;
         this.canvas.width = this.width;
         this.canvas.height = this.height;
+        this.measureTopics();
+    }
+
+    measureTopics() {
+        const topicsEl = document.getElementById('topics');
+        if (topicsEl) {
+            const rect = topicsEl.getBoundingClientRect();
+            this.topicsTop = rect.top + window.scrollY;
+            this.topicsBottom = rect.bottom + window.scrollY;
+        }
     }
 
     initCardListeners() {
@@ -107,12 +123,24 @@ export class VisualFX {
         // Topic Card Hover Embers (Continuous)
         if (this.hoveredCard) {
             const rect = this.hoveredCard.getBoundingClientRect();
-            // Emit from bottom
             const x = rect.left + Math.random() * rect.width;
             const y = rect.bottom; 
-            
             if (Math.random() > 0.5) {
                 this.particles.push(new Particle(x, y, 'ember', this.hoverColor));
+            }
+        }
+
+        // Ambient gold sparks in topics zone
+        const scrollDelta = Math.abs(this.scrollY - this.lastScrollY);
+        this.lastScrollY = this.scrollY;
+        const inTopics = this.scrollY + this.viewH > this.topicsTop && this.scrollY < this.topicsBottom;
+        if (inTopics && scrollDelta > 1) {
+            // Spawn 1-2 sparks per frame while scrolling, very sparse
+            const spawnChance = Math.min(scrollDelta * 0.02, 0.4);
+            if (Math.random() < spawnChance) {
+                const x = Math.random() * this.width;
+                const y = Math.random() * this.height;
+                this.particles.push(new Particle(x, y, 'ambient', '#DFBD69'));
             }
         }
 
@@ -141,9 +169,9 @@ class Particle {
     maxLife: number;
     size: number;
     color: string;
-    type: 'cursor' | 'ember' | 'burst' | 'transition';
+    type: 'cursor' | 'ember' | 'burst' | 'transition' | 'ambient';
 
-    constructor(x: number, y: number, type: 'cursor' | 'ember' | 'burst' | 'transition', colorBase: string) {
+    constructor(x: number, y: number, type: 'cursor' | 'ember' | 'burst' | 'transition' | 'ambient', colorBase: string) {
         this.x = x;
         this.y = y;
         this.type = type;
@@ -174,6 +202,14 @@ class Particle {
             this.size = 1.5 + Math.random() * 2.5;
             const fireColors = ['#D4380D', '#E8611A', '#C75B2A', '#FFB347', '#8B2500'];
             this.color = fireColors[Math.floor(Math.random() * fireColors.length)];
+        } else if (type === 'ambient') {
+            // Subtle gold fire sparks — tiny, slow drift upward
+            this.vx = (Math.random() - 0.5) * 0.3;
+            this.vy = -0.3 - Math.random() * 0.5;
+            this.maxLife = 100 + Math.random() * 80;
+            this.size = 1 + Math.random() * 1.5;
+            const goldSparks = ['#DFBD69', '#C9A84C', '#FBF5B7', '#926F34', '#E8C547'];
+            this.color = goldSparks[Math.floor(Math.random() * goldSparks.length)];
         } else {
             // Ember
             this.vx = (Math.random() - 0.5) * 1; 
@@ -201,6 +237,9 @@ class Particle {
         } else if (this.type === 'burst') {
             this.vx *= 0.9;
             this.vy *= 0.9;
+        } else if (this.type === 'ambient') {
+            this.vy *= 0.995;
+            this.x += Math.sin(this.life * 0.04) * 0.2;
         }
     }
 
@@ -218,6 +257,10 @@ class Particle {
              ctx.globalCompositeOperation = 'lighter';
         } else if (this.type === 'transition') {
             ctx.shadowBlur = 12;
+            ctx.shadowColor = this.color;
+            ctx.globalCompositeOperation = 'lighter';
+        } else if (this.type === 'ambient') {
+            ctx.shadowBlur = 10;
             ctx.shadowColor = this.color;
             ctx.globalCompositeOperation = 'lighter';
         } else {
