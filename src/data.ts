@@ -25,6 +25,7 @@ export interface Topic {
   oneLinerEN: string;
   oneLinerCN: string;
   tags: string[];
+  tagsCN: string[];
   readTime: string;
   sections: TopicSection[];
   glossary: GlossaryEntry[];
@@ -44,6 +45,7 @@ export const topics: Topic[] = [
     oneLinerEN: 'A beast, a calendar, and the courage to start the count again.',
     oneLinerCN: '一头年兽、一部历法，以及重新开始计数的勇气。',
     tags: ['cosmology', 'calendar', 'mythology'],
+    tagsCN: ['宇宙观', '历法', '神话'],
     readTime: '5 min',
     sections: [
       { question: 'What is the Lunar New Year, and when did it begin?', answer: 'The Lunar New Year follows the lunisolar calendar — a system that tracks both the moon\'s phases and the sun\'s position. Its origins stretch back at least 3,500 years to the Shang Dynasty, when oracle bones recorded lunar observations and ritual sacrifices at year\'s end. The festival marks the second new moon after the winter solstice.' },
@@ -72,6 +74,7 @@ export const topics: Topic[] = [
     oneLinerEN: 'Three abolitions, one renaming, and a festival that refused to die.',
     oneLinerCN: '三次废除、一次改名，和一个拒绝消亡的节日。',
     tags: ['politics', 'modernity', 'resilience'],
+    tagsCN: ['政治', '现代性', '韧性'],
     readTime: '6 min',
     sections: [
       { question: 'Why is it called "Spring Festival" instead of "New Year"?', answer: 'In 1914, a bureaucrat proposed a compromise. The new Republic of China had adopted the Western calendar, yet hundreds of millions of people refused to abandon the lunar one. January 1st would take the name Yuandan—"First Dawn"—and the lunar celebration would be relabeled Chunjie—"Spring Festival." The people accepted the new name. They did not accept the new time.' },
@@ -100,6 +103,7 @@ export const topics: Topic[] = [
     oneLinerEN: 'Hong Kong watches fireworks from a distance. Taiwan stands inside the fire.',
     oneLinerCN: '香港隔岸观火。台湾置身火中。',
     tags: ['identity', 'colonial', 'regional'],
+    tagsCN: ['身份', '殖民', '地域'],
     readTime: '7 min',
     sections: [
       { question: 'What does it mean to share roots but live different lives?', answer: 'Hong Kong\'s New Year is a celebration of containment — firecrackers banned since 1967, flower markets as managed spectacle, tradition compressed into the smallest apartment. Taiwan\'s New Year is a celebration of release — dangerous festivals like the Yanshui Beehive returned after martial law as assertions of identity. One watches from the shore. The other stands inside the fire.' },
@@ -127,6 +131,7 @@ export const topics: Topic[] = [
     oneLinerEN: 'The same moon rises. Five nations see five different festivals.',
     oneLinerCN: '同一轮月亮升起。五个国家看到五个不同的节日。',
     tags: ['diaspora', 'japan', 'korea', 'vietnam'],
+    tagsCN: ['离散', '日本', '韩国', '越南'],
     readTime: '7 min',
     sections: [
       { question: 'What does "One Moon, Many New Years" mean?', answer: 'On February 17, 2026, the second new moon after the winter solstice will rise. In China it is Chunjie, in Korea Seollal, in Vietnam Tết, in the Philippines a Chinoy celebration of Tikoy. In Japan, the lunar calendar was abolished in 1873 — the New Year is solar January 1st. One celestial trigger, fractured by history and identity.' },
@@ -154,6 +159,7 @@ export const topics: Topic[] = [
     oneLinerEN: 'Twelve animals, five elements, sixty years — and one horse on fire.',
     oneLinerCN: '十二生肖、五行、六十年——以及一匹燃烧的马。',
     tags: ['cosmology', 'wuxing', 'fire-horse'],
+    tagsCN: ['宇宙观', '五行', '火马'],
     readTime: '7 min',
     sections: [
       { question: 'What is the Chinese Zodiac?', answer: 'Not merely twelve animals — it is a cosmological machine for measuring time. Its origins stretch to the Shang Dynasty (c. 1600–1050 BC), born from the observation of Jupiter\'s twelve-year orbit. The zodiac is the fossilized remnant of humanity\'s first attempts to map the heavens onto human affairs.' },
@@ -180,7 +186,8 @@ export const topics: Topic[] = [
     subtitleCN: '规矩的温情',
     oneLinerEN: 'Kowtows, red envelopes, taboos. Behind the complexity is a reverence for order.',
     oneLinerCN: '磕头、红包、禁忌。繁琐背后，是对秩序的敬畏。',
-    tags: ['RITUAL', 'FAMILY', 'ETIQUETTE'],
+    tags: ['ritual', 'family', 'etiquette'],
+    tagsCN: ['礼制', '家庭', '礼仪'],
     readTime: '6 min',
     sections: [
       { question: 'What happens before New Year\'s Day begins?', answer: 'On the 23rd or 24th of the twelfth lunar month, the Kitchen God departs for heaven to report on the family\'s conduct. Families offer malt sugar candies — to bribe the deity into speaking well, or to stick his teeth shut. It is a pragmatic negotiation with the divine bureaucracy.' },
@@ -207,7 +214,8 @@ export const topics: Topic[] = [
     subtitleCN: '欲望的清单',
     oneLinerEN: 'From narcissus flowers to electronics, what are we buying?',
     oneLinerCN: '从水仙花到电子产品，我们在买什么？',
-    tags: ['CONSUMERISM', 'TRADITION', 'GIFTING'],
+    tags: ['consumerism', 'tradition', 'gifting'],
+    tagsCN: ['消费', '传统', '馈赠'],
     readTime: '7 min',
     sections: [
       { question: 'What are "Nianhuo" and why do they matter?', answer: 'Nianhuo — New Year goods — are not ordinary groceries. Each item is selected for its symbolic resonance, its ability to speak the language of blessing. In the Chinese moral economy, a gift received creates a debt of reciprocity that must be repaid. Consumption becomes communication.' },
@@ -234,6 +242,7 @@ export const topics: Topic[] = [
     oneLinerEN: 'Nine billion journeys. One question: who waits for me at home?',
     oneLinerCN: '九十亿次旅程。一个问题：谁在家等我？',
     tags: ['migration', 'hukou', 'family'],
+    tagsCN: ['迁徙', '户口', '家庭'],
     readTime: '6 min',
     sections: [
       { question: 'What is Chunyun?', answer: 'The Spring Festival travel rush — the largest annual human migration on Earth. Over 9 billion trips in 40 days. It is the physical manifestation of a nation negotiating between economic aspiration and the Confucian imperative of filial piety. For the "floating population," the annual return is a reclamation of identity.' },
@@ -260,6 +269,7 @@ export const topics: Topic[] = [
     oneLinerEN: 'Trillions of yuan spent. The ledger clears not debt, but distance.',
     oneLinerCN: '万亿元支出。清的不是账，而是距离。',
     tags: ['economy', 'hongbao', 'logistics'],
+    tagsCN: ['经济', '红包', '物流'],
     readTime: '6 min',
     sections: [
       { question: 'What is the "Spring Festival Economy"?', answer: 'More accurately a ritual economy — a vast circulation of wealth whose primary function is not material exchange but social repair. Every yuan carries symbolic weight. For the Fire Horse year, spending becomes protective — a "Red Shield" against zodiacal volatility.' },
@@ -286,6 +296,7 @@ export const topics: Topic[] = [
     oneLinerEN: 'We begin again not because time demands it, but because meaning requires it.',
     oneLinerCN: '我们重新开始，不是因为时间要求，而是因为意义需要。',
     tags: ['philosophy', 'time', 'liu-bai'],
+    tagsCN: ['哲学', '时间', '留白'],
     readTime: '6 min',
     sections: [
       { question: 'What does "Guo Nian" actually mean?', answer: 'Guo Nian — "passing the year" or "surviving the Nian." The etymology reveals the festival\'s origins in precarious agrarian existence. To "pass" the year is not merely to celebrate it. It is to survive it — a ritual of collective survival against the darkness of winter.' },

@@ -21,7 +21,7 @@ function renderTopicCards() {
         <h3 class="topic-card__title" data-en="${t.titleEN}" data-cn="${t.titleCN}">${t.titleEN}</h3>
         <p class="topic-card__subtitle" data-en="${t.subtitleEN}" data-cn="${t.subtitleCN}">${t.subtitleEN}</p>
         <div class="topic-card__tags">
-          ${t.tags.map(tag => `<span class="topic-card__tag">${tag}</span>`).join('')}
+          ${t.tags.map((tag, ti) => `<span class="topic-card__tag" data-en="${tag}" data-cn="${t.tagsCN[ti]}">${tag}</span>`).join('')}
         </div>
       </div>
       <svg class="topic-card__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -68,6 +68,7 @@ function initScrollAnimations() {
 import { SceneManager } from './webgl/Scene';
 import { HeroParticles } from './webgl/HeroParticles';
 import { CursorParticles } from './webgl/CursorParticles';
+import { WaveParticles } from './webgl/WaveParticles';
 
 // ... 
 
@@ -84,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroParticles = new HeroParticles();
   scene.add(heroParticles);
   scene.add(new CursorParticles()); // Gold Sparks
+  scene.add(new WaveParticles());   // Flowing Terrain
   
   // Inject Global Grain
   const grain = document.createElement('div');
