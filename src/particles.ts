@@ -62,7 +62,6 @@ export function initParticles() {
 
   function update() {
     hueShift += 0.02;  // Very slow drift between gold → warm red → gold
-    const globalHueOffset = Math.sin(hueShift) * 8;
 
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];

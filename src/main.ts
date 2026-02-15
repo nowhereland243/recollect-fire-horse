@@ -33,7 +33,7 @@ function renderTopicCards() {
 // ─── Scroll-Based Animations ───
 function initScrollAnimations() {
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const delay = (entry.target as HTMLElement).dataset.delay || '0';
         setTimeout(() => {
@@ -60,8 +60,6 @@ function initNavScroll() {
   const nav = document.getElementById('nav');
   const scrollHint = document.querySelector('.hero__scroll');
   if (!nav) return;
-
-  let lastY = 0;
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
 
@@ -76,8 +74,6 @@ function initNavScroll() {
     if (scrollHint && y > 100) {
       scrollHint.classList.add('hidden');
     }
-
-    lastY = y;
   }, { passive: true });
 }
 
