@@ -40,6 +40,24 @@ function initScrollAnimations() {
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.topic-card').forEach(card => observer.observe(card));
+
+  // Intro text cinematic reveal
+  const introText = document.querySelector('.intro__text');
+  if (introText) observer.observe(introText);
+
+  // Transition zone scroll entrance
+  const transZone = document.getElementById('transition-zone');
+  if (transZone) {
+    const tzObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          transZone.classList.add('visible');
+          tzObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    tzObserver.observe(transZone);
+  }
   
   // Hero Ritual Sequence Entrance (GSAP)
   const heroContent = document.querySelector('.hero__content');

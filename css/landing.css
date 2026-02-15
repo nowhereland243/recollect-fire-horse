@@ -161,18 +161,84 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 30vh;
-  background: linear-gradient(to bottom, transparent 0%, #1a0000 70%, #2a0505 100%);
+  height: 45vh;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(26, 0, 0, 0.3) 25%,
+    rgba(26, 0, 0, 0.7) 55%,
+    #1a0000 80%,
+    #0d0d0d 100%
+  );
   pointer-events: none;
   z-index: 1;
 }
 
+/* ─── Transition Zone (between hero & intro) ─── */
+.transition-zone {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin-top: -8vh;
+  margin-bottom: -4vh;
+  pointer-events: none;
+}
+
+.transition-zone__line {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(212, 175, 55, 0.5) 40%,
+    rgba(212, 175, 55, 0.5) 60%,
+    transparent
+  );
+  animation: lineGrow 2s ease 2.5s both;
+}
+
+.transition-zone__glow {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.8), transparent);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4), 0 0 60px rgba(212, 175, 55, 0.15);
+  margin: 12px 0;
+  animation: glowPulse 3s ease-in-out infinite, fadeIn 1.5s ease 3s both;
+}
+
+@keyframes lineGrow {
+  from { transform: scaleY(0); opacity: 0; }
+  to   { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.5); }
+}
+
 /* ─── Intro Section ─── */
 .intro {
-  padding: 12vh 5vw;
+  position: relative;
+  padding: 8vh 5vw 12vh;
   display: flex;
   justify-content: center;
   background: transparent;
+}
+
+.intro::before {
+  content: '';
+  position: absolute;
+  top: -10vh;
+  left: 0;
+  right: 0;
+  height: 20vh;
+  background: linear-gradient(to bottom, transparent, rgba(13, 13, 13, 0.0));
+  pointer-events: none;
 }
 
 .intro .container {
@@ -186,6 +252,15 @@
   line-height: 1.85;
   color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.intro__text.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ─── Topics Section (Universe Timeline) ─── */
