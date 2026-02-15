@@ -10,6 +10,8 @@ export class VisualFX {
     mouseY: number = 0;
     hoveredCard: HTMLElement | null = null;
     hoverColor: string = '#DFBD69';
+    scrollY: number = 0;
+    viewH: number = window.innerHeight;
     
     constructor() {
         this.canvas = document.createElement('canvas');
@@ -29,6 +31,10 @@ export class VisualFX {
         
         window.addEventListener('resize', () => this.resize());
         window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+        window.addEventListener('scroll', () => {
+            this.scrollY = window.scrollY;
+            this.viewH = window.innerHeight;
+        }, { passive: true });
         
         // Defer listener attachment to ensure DOM is ready
         setTimeout(() => this.initCardListeners(), 100);
@@ -87,6 +93,17 @@ export class VisualFX {
     loop() {
         this.ctx.clearRect(0, 0, this.width, this.height);
         
+        // Hero → Intro transition fire embers
+        const scrollRatio = this.scrollY / this.viewH;
+        if (scrollRatio > 0.4 && scrollRatio < 1.2) {
+            const intensity = 1 - Math.abs(scrollRatio - 0.8) / 0.4; // peaks at 0.8
+            if (Math.random() < intensity * 0.3) {
+                const x = Math.random() * this.width;
+                const y = this.height * (0.85 - scrollRatio * 0.15);
+                this.particles.push(new Particle(x, y, 'transition', '#D4380D'));
+            }
+        }
+
         // Topic Card Hover Embers (Continuous)
         if (this.hoveredCard) {
             const rect = this.hoveredCard.getBoundingClientRect();
@@ -124,9 +141,9 @@ class Particle {
     maxLife: number;
     size: number;
     color: string;
-    type: 'cursor' | 'ember' | 'burst';
+    type: 'cursor' | 'ember' | 'burst' | 'transition';
 
-    constructor(x: number, y: number, type: 'cursor' | 'ember' | 'burst', colorBase: string) {
+    constructor(x: number, y: number, type: 'cursor' | 'ember' | 'burst' | 'transition', colorBase: string) {
         this.x = x;
         this.y = y;
         this.type = type;
@@ -149,6 +166,14 @@ class Particle {
             this.vy = Math.sin(angle) * speed;
             this.maxLife = 30 + Math.random() * 20;
             this.size = 2 + Math.random() * 3;
+        } else if (type === 'transition') {
+            // Fire spark — rises gently, sways, fades
+            this.vx = (Math.random() - 0.5) * 0.6;
+            this.vy = -0.5 - Math.random() * 1.2;
+            this.maxLife = 80 + Math.random() * 60;
+            this.size = 1.5 + Math.random() * 2.5;
+            const fireColors = ['#D4380D', '#E8611A', '#C75B2A', '#FFB347', '#8B2500'];
+            this.color = fireColors[Math.floor(Math.random() * fireColors.length)];
         } else {
             // Ember
             this.vx = (Math.random() - 0.5) * 1; 
@@ -169,6 +194,10 @@ class Particle {
         if (this.type === 'ember') {
             this.vy *= 0.98;
             this.x += Math.sin(this.life * 0.1) * 0.5;
+        } else if (this.type === 'transition') {
+            this.vy *= 0.99;
+            this.x += Math.sin(this.life * 0.06) * 0.3;
+            this.size *= 0.98;
         } else if (this.type === 'burst') {
             this.vx *= 0.9;
             this.vy *= 0.9;
@@ -187,6 +216,10 @@ class Particle {
              ctx.shadowBlur = 20;
              ctx.shadowColor = this.color;
              ctx.globalCompositeOperation = 'lighter';
+        } else if (this.type === 'transition') {
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = this.color;
+            ctx.globalCompositeOperation = 'lighter';
         } else {
             ctx.shadowBlur = 8;
             ctx.shadowColor = this.color;

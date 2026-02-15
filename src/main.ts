@@ -73,11 +73,29 @@ function initScrollAnimations() {
       });
       
       // Sub-elements fade in after
-      [subTitle, dateEl, scrollEl].forEach((el, i) => {
+      [subTitle, dateEl].forEach((el, i) => {
         if (el) {
           gsap.fromTo(el, { y: 20, opacity: 0 }, { duration: 1, y: 0, opacity: 1, ease: "power3.out", delay: 1.8 + i * 0.2, clearProps: "all" });
         }
       });
+
+      // Scroll button — click to scroll, auto-hide on scroll
+      if (scrollEl) {
+        gsap.fromTo(scrollEl, { opacity: 0 }, { duration: 1, opacity: 1, ease: "power3.out", delay: 2.4, clearProps: "opacity" });
+
+        scrollEl.addEventListener('click', () => {
+          const intro = document.getElementById('intro');
+          if (intro) intro.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        let scrollHidden = false;
+        window.addEventListener('scroll', () => {
+          if (!scrollHidden && window.scrollY > window.innerHeight * 0.3) {
+            scrollEl.classList.add('hidden');
+            scrollHidden = true;
+          }
+        }, { passive: true });
+      }
   }
 }
 

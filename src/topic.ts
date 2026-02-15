@@ -4,7 +4,7 @@
 
 import { topics } from './data';
 import { narrativeData } from './narrative-data';
-import { initI18n } from './i18n';
+import { initI18n, onLangChange } from './i18n';
 import { VisualFX } from './fx';
 
 function renderTopic() {
@@ -164,11 +164,39 @@ function renderTopic() {
 document.addEventListener('DOMContentLoaded', () => {
   renderTopic();
   initI18n();
-  // Init VisualFX (will add cursor trail, picking up theme color from style if implemented, 
-  // currently FX defaults to gold, but we updated it to use default.
-  // We can pass the color to FX if we update constructor, but standard gold trail is fine for consistency, 
-  // or we can update FX to read --topic-color variable.)
+
+  // Re-render narrative body on language toggle
+  onLangChange((lang) => {
+    const params = new URLSearchParams(window.location.search);
+    const idCursor = params.get('t');
+    const topic = topics.find(t => t.id === idCursor);
+    if (!topic) return;
+
+    const topicNarrative = narrativeData[topic.id];
+    if (!topicNarrative) return;
+
+    // Pick the right language array
+    const sections = lang === 'cn' ? topicNarrative.narrativeCN : topicNarrative.narrative;
+    
+    // Re-render narrative sections
+    const narrativeEl = document.querySelector('.topic-narrative');
+    if (narrativeEl && sections.length > 0) {
+      let html = '';
+      sections.forEach((s, i) => {
+        html += `<article class="topic-narrative__section visible" style="animation-delay: ${i * 0.08}s">`;
+        if (s.title) {
+          html += `<h3 class="topic-narrative__heading" style="color:${topic.themeColor || 'var(--clr-gold)'}">${s.title}</h3>`;
+        }
+        html += `<div class="topic-narrative__body">${s.body}</div>`;
+        if (i < sections.length - 1) {
+          html += `<hr class="topic-narrative__divider" style="border-color:${topic.themeColor}22" />`;
+        }
+        html += '</article>';
+      });
+      narrativeEl.innerHTML = html;
+    }
+  });
+
+  // Init VisualFX
   new VisualFX();
-  // FX reads hoverColor from cards, but on detail page there are no cards. 
-  // It defaults to Gold. 
 });

@@ -61,7 +61,7 @@ export const topics: Topic[] = [
       { term: '天干地支', pinyin: 'Tiāngān Dìzhī', meaning: 'Heavenly Stems and Earthly Branches — the 60-year cycle' },
     ],
     closingLine: 'We are honored to share this exploration with you.',
-    themeColor: '#DFBD69', // Gold
+    themeColor: '#C94040', // 正红
   },
   {
     id: 'evolution',
@@ -90,7 +90,7 @@ export const topics: Topic[] = [
       { term: '春晚', pinyin: 'Chūnwǎn', meaning: 'The CCTV Spring Festival Gala (since 1983)' },
     ],
     closingLine: 'We are honored to share this exploration with you.',
-    themeColor: '#2A9D8F', // Jade
+    themeColor: '#B83A3A', // 深红
   },
   {
     id: 'hktw',
@@ -118,7 +118,7 @@ export const topics: Topic[] = [
       { term: '本土化', pinyin: 'Běntǔhuà', meaning: 'Indigenization — Taiwan\'s post-martial law cultural reclamation' },
     ],
     closingLine: 'Two strategies of survival — one of containment, one of release.',
-    themeColor: '#E63946', // Crimson
+    themeColor: '#D4380D', // 朱砂红
   },
   {
     id: 'overseas',
@@ -146,7 +146,7 @@ export const topics: Topic[] = [
       { term: '鑲嵌', pinyin: 'Xông đất', meaning: 'Vietnamese First-Footing ritual' },
     ],
     closingLine: 'A single moon can mean many things to many peoples.',
-    themeColor: '#457B9D', // Ocean
+    themeColor: '#A83535', // 暗红
   },
   {
     id: 'zodiac',
@@ -174,7 +174,7 @@ export const topics: Topic[] = [
       { term: '五行', pinyin: 'Wǔxíng', meaning: 'Five Phases — Wood, Fire, Earth, Metal, Water' },
     ],
     closingLine: 'The mechanics of the cosmos shape human time.',
-    themeColor: '#BC4749', // Earth
+    themeColor: '#C94040', // 正红
   },
   {
     id: 'customs',
@@ -202,7 +202,7 @@ export const topics: Topic[] = [
       { term: '拱手', pinyin: 'Gǒng Shǒu', meaning: 'Cupped-hand salute — left-over-right for men' },
     ],
     closingLine: 'We wear red to remind the winter that the fire of the horse still burns within the blood.',
-    themeColor: '#F4A261', // Orange
+    themeColor: '#B83A3A', // 深红
   },
   {
     id: 'goods',
@@ -230,6 +230,7 @@ export const topics: Topic[] = [
       { term: '国潮', pinyin: 'Guócháo', meaning: '"National Trend" — heritage meets modern design' },
     ],
     closingLine: 'The New Year market is not merely moving goods — it is moving hearts.',
+    themeColor: '#D4380D', // 朱砂红
   },
   {
     id: 'homebound',
@@ -257,6 +258,7 @@ export const topics: Topic[] = [
       { term: '站票', pinyin: 'Zhànpiào', meaning: 'Standing ticket — boarding without a seat for 20+ hours' },
     ],
     closingLine: 'Nine billion journeys answer a single question: Who waits for me at home?',
+    themeColor: '#A83535', // 暗红
   },
   {
     id: 'commerce',
@@ -284,6 +286,7 @@ export const topics: Topic[] = [
       { term: '预制菜', pinyin: 'Yùzhìcài', meaning: 'Pre-made dishes — controversial convenience revolution' },
     ],
     closingLine: 'When the festival ends, the ledger is clear — not of debt, but of distance.',
+    themeColor: '#C94040', // 正红
   },
   {
     id: 'vision',
@@ -311,5 +314,6 @@ export const topics: Topic[] = [
       { term: '守岁', pinyin: 'Shǒu Suì', meaning: '"Guarding the Year" — all-night vigil' },
     ],
     closingLine: 'We begin again not because time demands it, but because meaning requires it.',
+    themeColor: '#B83A3A', // 深红
   },
 ];

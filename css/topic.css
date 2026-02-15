@@ -66,7 +66,6 @@
   font-family: var(--font-serif-en);
   font-size: clamp(1.1rem, 3vw, 1.3rem);
   font-weight: 400;
-  font-style: italic;
   color: var(--clr-ivory);
   line-height: 1.6;
   margin-bottom: var(--sp-4);

@@ -3,6 +3,7 @@
 // ═══════════════════════════════════════════════════════════
 
 let currentLang: 'en' | 'cn' = 'en';
+const langChangeCallbacks: Array<(lang: 'en' | 'cn') => void> = [];
 
 export function initI18n() {
   const toggle = document.getElementById('lang-toggle');
@@ -13,6 +14,9 @@ export function initI18n() {
     applyLanguage();
     toggle.textContent = currentLang === 'en' ? 'EN / 中' : '中 / EN';
     toggle.classList.toggle('active', currentLang === 'cn');
+
+    // Fire callbacks for dynamic content re-rendering
+    langChangeCallbacks.forEach(cb => cb(currentLang));
   });
 }
 
@@ -31,4 +35,8 @@ function applyLanguage() {
 
 export function getLang(): 'en' | 'cn' {
   return currentLang;
+}
+
+export function onLangChange(callback: (lang: 'en' | 'cn') => void) {
+  langChangeCallbacks.push(callback);
 }
