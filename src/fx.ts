@@ -34,6 +34,16 @@ export class VisualFX {
         
         window.addEventListener('resize', () => this.resize());
         window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+        
+        // Tap particles on touch and click
+        window.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            this.spawnTapParticles(touch.clientX, touch.clientY);
+        }, { passive: true });
+        window.addEventListener('click', (e) => {
+            this.spawnTapParticles(e.clientX, e.clientY);
+        });
+        
         window.addEventListener('scroll', () => {
             this.scrollY = window.scrollY;
             this.viewH = window.innerHeight;
@@ -106,6 +116,15 @@ export class VisualFX {
         }
     }
 
+    spawnTapParticles(x: number, y: number) {
+        const count = 5 + Math.floor(Math.random() * 4); // 5-8 particles
+        for (let i = 0; i < count; i++) {
+            const colors = ['#DFBD69', '#D4380D', '#E8611A', '#C9A84C', '#FFB347'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            this.particles.push(new Particle(x, y, 'tap', color));
+        }
+    }
+
     loop() {
         this.ctx.clearRect(0, 0, this.width, this.height);
         
@@ -169,9 +188,9 @@ class Particle {
     maxLife: number;
     size: number;
     color: string;
-    type: 'cursor' | 'ember' | 'burst' | 'transition' | 'ambient';
+    type: 'cursor' | 'ember' | 'burst' | 'transition' | 'ambient' | 'tap';
 
-    constructor(x: number, y: number, type: 'cursor' | 'ember' | 'burst' | 'transition' | 'ambient', colorBase: string) {
+    constructor(x: number, y: number, type: 'cursor' | 'ember' | 'burst' | 'transition' | 'ambient' | 'tap', colorBase: string) {
         this.x = x;
         this.y = y;
         this.type = type;
@@ -210,6 +229,14 @@ class Particle {
             this.size = 1 + Math.random() * 1.5;
             const goldSparks = ['#DFBD69', '#C9A84C', '#FBF5B7', '#926F34', '#E8C547'];
             this.color = goldSparks[Math.floor(Math.random() * goldSparks.length)];
+        } else if (type === 'tap') {
+            // Minimal physics — gentle radial burst, tiny size
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 0.5 + Math.random() * 1.5;
+            this.vx = Math.cos(angle) * speed;
+            this.vy = Math.sin(angle) * speed - 0.5; // slight upward bias
+            this.maxLife = 30 + Math.random() * 25;
+            this.size = 1.5 + Math.random() * 2;
         } else {
             // Ember
             this.vx = (Math.random() - 0.5) * 1; 
@@ -240,6 +267,10 @@ class Particle {
         } else if (this.type === 'ambient') {
             this.vy *= 0.995;
             this.x += Math.sin(this.life * 0.04) * 0.2;
+        } else if (this.type === 'tap') {
+            this.vx *= 0.92;
+            this.vy *= 0.92;
+            this.vy -= 0.02; // gentle gravity drift up
         }
     }
 
@@ -261,6 +292,10 @@ class Particle {
             ctx.globalCompositeOperation = 'lighter';
         } else if (this.type === 'ambient') {
             ctx.shadowBlur = 10;
+            ctx.shadowColor = this.color;
+            ctx.globalCompositeOperation = 'lighter';
+        } else if (this.type === 'tap') {
+            ctx.shadowBlur = 8;
             ctx.shadowColor = this.color;
             ctx.globalCompositeOperation = 'lighter';
         } else {

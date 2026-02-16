@@ -380,24 +380,24 @@ hr {
 
 .footer__partner-label {
   font-family: var(--font-sans);
-  font-size: 0.6rem;
-  font-weight: 300;
+  font-size: 0.65rem;
+  font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.45);
   margin-bottom: 1.2rem;
 }
 
 .footer__partner-logo {
   max-width: 160px;
   max-height: 60px;
-  opacity: 0.5;
-  filter: brightness(0.9);
+  opacity: 0.65;
+  filter: brightness(0.95);
   transition: opacity 0.3s ease;
 }
 
 .footer__partner-logo:hover {
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 .footer__bottom {
@@ -411,7 +411,7 @@ hr {
 .footer__copy {
   font-family: var(--font-sans);
   font-size: 0.55rem;
-  color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.28);
   letter-spacing: 0.12em;
   text-align: center;
   line-height: 2;
