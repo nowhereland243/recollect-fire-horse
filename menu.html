@@ -33,20 +33,36 @@
     </div>
   </nav>
 
-  <main style="padding: calc(var(--nav-h) + var(--sp-10)) var(--sp-4) var(--sp-10); min-height: 80vh; display: flex; align-items: center; justify-content: center;">
-    <div class="container" style="text-align: center;">
-      <p style="font-family: var(--font-serif); font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700; color: var(--clr-gold); margin-bottom: var(--sp-3);">菜单</p>
-      <p style="font-family: var(--font-serif-en); font-size: var(--fs-lg); color: var(--clr-ivory); margin-bottom: var(--sp-6);">The Menu</p>
-      <p style="font-family: var(--font-sans); font-size: var(--fs-base); font-weight: 300; color: var(--clr-muted); line-height: 1.8; max-width: 420px; margin: 0 auto;">
-        The dinner menu will be revealed on the evening of the salon.
-        <br /><br />
-        <span style="color: var(--clr-gold);">February 16, 2026</span>
-      </p>
+  <main style="padding: calc(var(--nav-h) + var(--sp-10)) var(--sp-4) var(--sp-10); min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <div class="container" style="text-align: center; width: 100%; max-width: 800px;">
+      <p style="font-family: var(--font-serif); font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700; color: var(--clr-gold); margin-bottom: var(--sp-3);" data-en="筵席" data-cn="筵席">筵席</p>
+      <p style="font-family: var(--font-serif-en); font-size: var(--fs-lg); color: var(--clr-ivory); margin-bottom: var(--sp-6);" data-en="Nourishment" data-cn="菜单">Nourishment</p>
+      <div style="width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; overflow: hidden; margin-bottom: var(--sp-6);">
+        <object data="/assets/menu.pdf" type="application/pdf" width="100%" style="height: 80vh; min-height: 500px; display: block;">
+          <div style="padding: var(--sp-8); text-align: center;">
+            <p style="font-family: var(--font-sans); font-size: var(--fs-base); color: var(--clr-muted); margin-bottom: var(--sp-4);">
+              Your browser doesn't support embedded PDFs.
+            </p>
+            <a href="/assets/menu.pdf" target="_blank" rel="noopener" style="display: inline-block; font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--clr-gold); border: 1px solid rgba(244,240,206,0.3); padding: 0.75rem 2rem; border-radius: 99px; text-decoration: none; letter-spacing: 0.1em; transition: all 0.3s ease;">
+              VIEW MENU PDF ↗
+            </a>
+          </div>
+        </object>
+      </div>
+      <a href="/assets/menu.pdf" target="_blank" rel="noopener" style="display: inline-block; font-family: var(--font-sans); font-size: 0.7rem; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='rgba(244,240,206,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+        DOWNLOAD PDF ↓
+      </a>
     </div>
   </main>
 
   <footer class="footer" id="footer">
     <div class="container">
+      <div class="footer__partner">
+        <p class="footer__partner-label" data-en="In partnership with" data-cn="合作伙伴">In partnership with</p>
+        <a href="https://www.thefifthhouse.com" target="_blank" rel="noopener">
+          <img src="/assets/t5h-logo.svg" alt="The Fifth House" class="footer__partner-logo" />
+        </a>
+      </div>
       <div class="footer__sponsors">
         <p class="footer__sponsors-label" data-en="With gratitude to our sponsors" data-cn="感谢我们的赞助商">With gratitude to our sponsors</p>
         <div class="footer__logos">

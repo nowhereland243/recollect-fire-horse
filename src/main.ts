@@ -27,6 +27,13 @@ function renderTopicCards() {
       <svg class="topic-card__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
   `).join('');
+
+  // Save scroll position when clicking any topic card
+  document.querySelectorAll('.topic-card').forEach(card => {
+    card.addEventListener('click', () => {
+      sessionStorage.setItem('recollect-scroll-y', String(window.scrollY));
+    });
+  });
 }
 
 // ─── Scroll Animations ───
@@ -39,7 +46,7 @@ function initScrollAnimations() {
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.topic-card').forEach(card => observer.observe(card));
+  // Topic cards: no scroll animation — show immediately
 
   // Intro text cinematic reveal
   const introText = document.querySelector('.intro__text');
@@ -132,6 +139,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initLenisScroll();
   initI18n();
   initAudio();
+
+  // Restore scroll position when returning from a topic page
+  const savedY = sessionStorage.getItem('recollect-scroll-y');
+  if (savedY) {
+    requestAnimationFrame(() => {
+      window.scrollTo(0, parseInt(savedY, 10));
+    });
+    sessionStorage.removeItem('recollect-scroll-y');
+  }
   
   // Initialize Quantum Particles
   const scene = new SceneManager();
