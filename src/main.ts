@@ -5,6 +5,7 @@ import { initAudio } from './audio';
 
 import { initLenisScroll } from './scroll';
 import { initNav } from './nav';
+import { VisualFX } from './fx';
 import gsap from 'gsap';
 
 // ─── Build Topic Cards ───
@@ -66,32 +67,29 @@ function initScrollAnimations() {
     tzObserver.observe(transZone);
   }
   
-  // Hero Ritual Sequence Entrance (GSAP)
+  // Hero Entrance — simple, smooth fade-in sequence
   const heroContent = document.querySelector('.hero__content');
   if (heroContent) {
-      // Animate the pre-title and subtitle/date normally
       const preTitle = heroContent.querySelector('.hero__pre');
       const subTitle = heroContent.querySelector('.hero__title-sub');
       const dateEl = heroContent.querySelector('.hero__date');
       const scrollEl = heroContent.querySelector('.hero__scroll');
       
       if (preTitle) {
-        gsap.fromTo(preTitle, { y: 30, opacity: 0 }, { duration: 1.2, y: 0, opacity: 1, ease: "power3.out", delay: 0.2 });
+        gsap.fromTo(preTitle, { y: 15, opacity: 0 }, { duration: 1, y: 0, opacity: 1, ease: "power2.out", delay: 0.3 });
       }
       
-      // Ritual words — stagger cascade with wave feel
+      // Ritual words — clean stagger, no bounce
       const steps = heroContent.querySelectorAll('.hero__step');
       steps.forEach((step, i) => {
-        const isHighlight = step.classList.contains('hero__step--highlight');
         gsap.fromTo(step,
-          { y: 60 + i * 10, opacity: 0, scale: isHighlight ? 0.9 : 0.95 },
+          { y: 15, opacity: 0 },
           {
-            duration: isHighlight ? 1.8 : 1.2,
+            duration: 0.8,
             y: 0,
             opacity: 1,
-            scale: 1,
-            ease: isHighlight ? "elastic.out(1, 0.75)" : "power3.out",
-            delay: 0.5 + i * 0.25,
+            ease: "power2.out",
+            delay: 0.6 + i * 0.15,
             clearProps: "transform"
           }
         );
@@ -100,7 +98,7 @@ function initScrollAnimations() {
       // Sub-elements fade in after
       [subTitle, dateEl].forEach((el, i) => {
         if (el) {
-          gsap.fromTo(el, { y: 20, opacity: 0 }, { duration: 1, y: 0, opacity: 1, ease: "power3.out", delay: 1.8 + i * 0.2, clearProps: "all" });
+          gsap.fromTo(el, { y: 10, opacity: 0 }, { duration: 0.8, y: 0, opacity: 1, ease: "power2.out", delay: 1.4 + i * 0.15, clearProps: "all" });
         }
       });
 
@@ -168,4 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
       timeline.className = 'timeline-line';
       topicsGrid.prepend(timeline);
   }
+
+  // Init VisualFX (tap particles)
+  new VisualFX();
 });

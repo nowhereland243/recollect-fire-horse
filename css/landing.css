@@ -481,7 +481,7 @@
 .footer__copy {
   font-family: var(--font-sans);
   font-size: 0.55rem;
-  color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.28);
   letter-spacing: 0.12em;
   line-height: 2;
   font-weight: 300;
