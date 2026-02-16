@@ -69,13 +69,11 @@ void main() {
     
     vec3 pos = position;
     
-    // Gentle curl/flow — the "living painting" effect
+    // Subtle vertical float only — no horizontal drift
     float noiseVal = snoise(vec3(pos.x * 0.6 + t, pos.y * 0.6 - t * 0.3, pos.z + t * 0.5));
-    float drift = noiseVal * 0.15 * aRandom.y;
+    float drift = noiseVal * 0.05 * aRandom.y;
     
-    pos.x += drift;
-    pos.y += drift * 0.8;
-    pos.z += drift * 0.5; 
+    pos.y += drift;
     
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mvPosition;

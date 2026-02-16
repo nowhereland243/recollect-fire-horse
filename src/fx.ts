@@ -127,39 +127,14 @@ export class VisualFX {
 
     loop() {
         this.ctx.clearRect(0, 0, this.width, this.height);
-        
-        // Hero → Intro transition fire embers
-        const scrollRatio = this.scrollY / this.viewH;
-        if (scrollRatio > 0.4 && scrollRatio < 1.2) {
-            const intensity = 1 - Math.abs(scrollRatio - 0.8) / 0.4; // peaks at 0.8
-            if (Math.random() < intensity * 0.3) {
-                const x = Math.random() * this.width;
-                const y = this.height * (0.85 - scrollRatio * 0.15);
-                this.particles.push(new Particle(x, y, 'transition', '#D4380D'));
-            }
-        }
 
-        // Topic Card Hover Embers (Continuous)
+        // Topic Card Hover Embers (Continuous) — mouse only, no scroll
         if (this.hoveredCard) {
             const rect = this.hoveredCard.getBoundingClientRect();
             const x = rect.left + Math.random() * rect.width;
             const y = rect.bottom; 
             if (Math.random() > 0.5) {
                 this.particles.push(new Particle(x, y, 'ember', this.hoverColor));
-            }
-        }
-
-        // Ambient gold sparks in topics zone
-        const scrollDelta = Math.abs(this.scrollY - this.lastScrollY);
-        this.lastScrollY = this.scrollY;
-        const inTopics = this.scrollY + this.viewH > this.topicsTop && this.scrollY < this.topicsBottom;
-        if (inTopics && scrollDelta > 1) {
-            // Spawn 1-2 sparks per frame while scrolling, very sparse
-            const spawnChance = Math.min(scrollDelta * 0.02, 0.4);
-            if (Math.random() < spawnChance) {
-                const x = Math.random() * this.width;
-                const y = Math.random() * this.height;
-                this.particles.push(new Particle(x, y, 'ambient', '#DFBD69'));
             }
         }
 
