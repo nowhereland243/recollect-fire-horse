@@ -126,7 +126,7 @@ function initScrollAnimations() {
 import { SceneManager } from './webgl/Scene';
 import { HeroParticles } from './webgl/HeroParticles';
 import { CursorParticles } from './webgl/CursorParticles';
-import { WaveParticles } from './webgl/WaveParticles';
+// WaveParticles removed — user requested no scroll left/right animation
 
 // ... 
 
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroParticles = new HeroParticles();
   scene.add(heroParticles);
   scene.add(new CursorParticles()); // Gold Sparks
-  scene.add(new WaveParticles());   // Flowing Terrain
+  // WaveParticles removed
   
   // Inject Global Grain
   const grain = document.createElement('div');
