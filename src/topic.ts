@@ -175,8 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Re-render narrative body on language toggle
   onLangChange((lang) => {
-    const params = new URLSearchParams(window.location.search);
-    const idCursor = params.get('t');
+    const idCursor = getTopicSlug();
     const topic = topics.find(t => t.id === idCursor);
     if (!topic) return;
 
@@ -202,6 +201,18 @@ document.addEventListener('DOMContentLoaded', () => {
         html += '</article>';
       });
       narrativeEl.innerHTML = html;
+    }
+
+    // Re-render closing line
+    const closingText = document.querySelector('.topic-closing__text');
+    if (closingText) {
+      closingText.innerHTML = `<em>${topic.closingLine}</em>`;
+    }
+    const closingAttr = document.querySelector('.topic-closing__attribution');
+    if (closingAttr) {
+      closingAttr.textContent = lang === 'cn' 
+        ? '— RECOLLECT：火马之年' 
+        : '— RECOLLECT: The Year of the Fire Horse';
     }
   });
 
